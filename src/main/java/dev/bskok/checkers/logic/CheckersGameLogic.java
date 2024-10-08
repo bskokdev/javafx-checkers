@@ -1,16 +1,16 @@
-package dev.bskok.checkers.gameLogic;
+package dev.bskok.checkers.logic;
 
-import dev.bskok.checkers.DTOs.Move;
-import dev.bskok.checkers.board.IGameBoard;
+import dev.bskok.checkers.board.Move;
+import dev.bskok.checkers.board.CheckersGameBoard;
 import dev.bskok.checkers.board.Piece;
 import javafx.scene.paint.Color;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CheckersGameLogic implements IGameLogic {
+public class CheckersGameLogic {
   public static final Logger log = LoggerFactory.getLogger(CheckersGameLogic.class);
 
-  private final IGameBoard checkersGameBoard;
+  private final CheckersGameBoard checkersGameBoard;
 
   private final int[][] topPlayerDeltas;
   private final int[][] bottomPlayerDeltas;
@@ -19,14 +19,13 @@ public class CheckersGameLogic implements IGameLogic {
   private Color winner;
   private Color currentTurn;
 
-  public CheckersGameLogic(IGameBoard checkersGameBoard) {
+  public CheckersGameLogic(CheckersGameBoard checkersGameBoard) {
     this.checkersGameBoard = checkersGameBoard;
     this.topPlayerDeltas = new int[][] {{1, 1}, {1, -1}, {1, 1}, {1, -1}, {-1, -1}, {-1, 1}};
     this.bottomPlayerDeltas = new int[][] {{-1, 1}, {-1, -1}, {-1, 1}, {-1, -1}, {1, -1}, {1, 1}};
     this.currentTurn = Color.RED;
   }
 
-  @Override
   public void handlePlayerActionAt(int row, int col) {
     if (selectedPiece == null) {
       selectPieceAt(row, col);
@@ -37,16 +36,14 @@ public class CheckersGameLogic implements IGameLogic {
     }
   }
 
-  @Override
   public void selectPieceAt(int row, int col) {
     Piece toBeSelected = checkersGameBoard.getPieceAt(row, col);
     if (toBeSelected != null && toBeSelected.getColor() == currentTurn) {
       selectedPiece = toBeSelected;
-      log.debug("User selected piece at position: [{}, {}]", row, col);
+      log.trace("User selected piece at position: [{}, {}]", row, col);
     }
   }
 
-  @Override
   public boolean existsWinner() {
     boolean redHasPieces = doesPlayerHavePiecesLeft(Color.RED);
     boolean aquaHasPieces = doesPlayerHavePiecesLeft(Color.AQUA);
@@ -64,7 +61,6 @@ public class CheckersGameLogic implements IGameLogic {
     return false;
   }
 
-  @Override
   public boolean areValidMovesLeftForPlayer(Color playerColor) {
     for (int row = 0; row < checkersGameBoard.getRows(); row++) {
       for (int col = 0; col < checkersGameBoard.getCols(); col++) {
@@ -77,7 +73,7 @@ public class CheckersGameLogic implements IGameLogic {
           Move normalMove = new Move(row, col, direction[0] + row, direction[1] + col);
           Move captureMove = new Move(row, col, direction[0] * 2 + row, direction[1] * 2 + col);
           if (isMoveValid(normalMove) || isMoveValid(captureMove)) {
-            log.debug("{} can still move on the board", ColorConverter.getColorName(playerColor));
+            log.trace("{} can still move on the board", ColorConverter.getColorName(playerColor));
             return true;
           }
         }
@@ -87,7 +83,6 @@ public class CheckersGameLogic implements IGameLogic {
     return false;
   }
 
-  @Override
   public boolean doesPlayerHavePiecesLeft(Color playerColor) {
     int rows = checkersGameBoard.getRows();
     int cols = checkersGameBoard.getCols();
@@ -96,7 +91,7 @@ public class CheckersGameLogic implements IGameLogic {
       for (int col = 0; col < cols; col++) {
         Piece pieceAtBoard = checkersGameBoard.getPieceAt(row, col);
         if (pieceAtBoard != null && pieceAtBoard.getColor() == playerColor) {
-          log.debug("{} has pieces on the board", ColorConverter.getColorName(playerColor));
+          log.trace("{} has pieces on the board", ColorConverter.getColorName(playerColor));
           return true;
         }
       }
@@ -105,7 +100,6 @@ public class CheckersGameLogic implements IGameLogic {
     return false;
   }
 
-  @Override
   public void handlePlayerMove(Move move) {
     if (!isMoveValid(move)) {
       deselectSelectedPiece();
@@ -135,11 +129,10 @@ public class CheckersGameLogic implements IGameLogic {
     }
   }
 
-  @Override
   public boolean isMoveValid(Move move) {
     Piece piece = checkersGameBoard.getPieceAt(move.fromRow(), move.fromCol());
     if (!checkersGameBoard.isPositionInBounds(move.toRow(), move.toCol())) {
-      log.debug(
+      log.trace(
           "Target position [{}, {}] is out of bounds for the given board",
           move.toRow(),
           move.toCol());
@@ -147,13 +140,13 @@ public class CheckersGameLogic implements IGameLogic {
     }
 
     if (checkersGameBoard.getPieceAt(move.toRow(), move.toCol()) != null) {
-      log.debug("Target position [{}, {}] is not empty", move.toRow(), move.toCol());
+      log.trace("Target position [{}, {}] is not empty", move.toRow(), move.toCol());
       return false;
     }
 
     int direction = (piece.getColor() == Color.RED) ? 1 : -1;
     if (!piece.isKing() && (move.toRow() - move.fromRow()) * direction < 0) {
-      log.debug("Non-king pieces can only move forward!");
+      log.trace("Non-king pieces can only move forward!");
       return false;
     }
 
@@ -165,7 +158,6 @@ public class CheckersGameLogic implements IGameLogic {
     return isCaptureDuringMove(move);
   }
 
-  @Override
   public void handleCaptureMove(Move move) {
     if (Math.abs(move.fromRow() - move.toRow()) != 2) {
       return;
@@ -177,7 +169,6 @@ public class CheckersGameLogic implements IGameLogic {
     checkersGameBoard.removePieceAt(capturedRow, capturedCol);
   }
 
-  @Override
   public boolean isCaptureDuringMove(Move move) {
     Piece capturingPiece = checkersGameBoard.getPieceAt(move.fromRow(), move.fromCol());
     if (Math.abs(move.fromRow() - move.toRow()) == 2
@@ -196,16 +187,14 @@ public class CheckersGameLogic implements IGameLogic {
     return false;
   }
 
-  @Override
   public void deselectSelectedPiece() {
-    log.debug(
+    log.trace(
         "{} has deselected the currently selected piece",
         ColorConverter.getColorName(selectedPiece.getColor()));
 
     selectedPiece = null;
   }
 
-  @Override
   public void swapPlayerTurns() {
     currentTurn = (currentTurn == Color.RED) ? Color.AQUA : Color.RED;
     log.info("{} has the current turn", ColorConverter.getColorName(currentTurn));

@@ -1,4 +1,4 @@
-package dev.bskok.checkers.gameLogic;
+package dev.bskok.checkers.logic;
 
 import javafx.scene.paint.Color;
 import org.slf4j.Logger;

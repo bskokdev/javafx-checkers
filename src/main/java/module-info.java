@@ -10,19 +10,14 @@ module dev.bskok.checkers {
       javafx.fxml;
 
   exports dev.bskok.checkers;
-  exports dev.bskok.checkers.exceptions;
 
   opens dev.bskok.checkers.board to
       javafx.fxml;
 
-  exports dev.bskok.checkers.gameLogic;
+  exports dev.bskok.checkers.logic;
 
-  opens dev.bskok.checkers.gameLogic to
+  opens dev.bskok.checkers.logic to
       javafx.fxml;
 
   exports dev.bskok.checkers.board;
-  exports dev.bskok.checkers.DTOs;
-
-  opens dev.bskok.checkers.DTOs to
-      javafx.fxml;
 }

@@ -1,25 +1,22 @@
 package dev.bskok.checkers.board;
 
-import dev.bskok.checkers.gameLogic.ColorConverter;
+import dev.bskok.checkers.logic.ColorConverter;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CheckersBoardBuilder implements IBoardBuilder {
+public class CheckersBoardBuilder {
   public static final Logger log = LoggerFactory.getLogger(CheckersBoardBuilder.class);
   private CheckersGameBoard board;
 
-  @Override
-  public IBoardBuilder initializeBoardDimensions(int rows, int cols, int tileSize) {
+  public CheckersBoardBuilder initializeBoardDimensions(int rows, int cols, int tileSize) {
     this.board = new CheckersGameBoard(tileSize, rows, cols);
     log.debug("Set board dimensions to: [rows={}, cols={}, tileSize={}]", rows, cols, tileSize);
     return this;
   }
 
-  @Override
   public CheckersBoardBuilder constructGrid() {
-    log.info("Creating the game board grid");
     for (int row = 0; row < board.getRows(); row++) {
       for (int col = 0; col < board.getCols(); col++) {
         int tileSize = board.getTileSize();
@@ -31,7 +28,7 @@ public class CheckersBoardBuilder implements IBoardBuilder {
         }
 
         board.add(cell, col, row);
-        log.debug(
+        log.trace(
             "Placed {} rectangle at position: [{}, {}]",
             ColorConverter.getColorName((Color) cell.getFill()),
             row,
@@ -42,9 +39,7 @@ public class CheckersBoardBuilder implements IBoardBuilder {
     return this;
   }
 
-  @Override
   public CheckersBoardBuilder placePieces() {
-    log.info("Placing pieces on the board during game bootstrapping");
     double pieceRadius = (double) board.getTileSize() / 2 - 5;
     int rows = board.getRows();
     int cols = board.getCols();
@@ -69,14 +64,12 @@ public class CheckersBoardBuilder implements IBoardBuilder {
     return this;
   }
 
-  @Override
   public CheckersBoardBuilder attachEventHandlers() {
     this.board.attachOnMouseClickedEventHandler();
     return this;
   }
 
-  @Override
-  public IGameBoard build() {
+  public CheckersGameBoard build() {
     return this.board;
   }
 }
