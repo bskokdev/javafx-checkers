@@ -1,7 +1,6 @@
 package dev.bskok.checkers;
 
 import dev.bskok.checkers.board.*;
-import dev.bskok.checkers.logic.CheckersGameLogic;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
@@ -14,23 +13,23 @@ public class CheckersApp extends Application {
 
   @Override
   public void start(Stage primaryStage) {
-    // TODO: add reading and writing from/to a file - save result after game ends
-    // TODO: there should also be a table with number of moves per game on the right
+    // TODO(bskok): add notifications for when we have a winner, etc.
+    // TODO(bskok): add reading and writing from/to a file - save result after game ends
+    // TODO(bskok): there should also be a table with number of moves per game on the right
     try {
       VBox leftLayout = new VBox();
 
       // Possible replace with a board factory to support multiple boards
-      // This would also require creating interfaces for the same logic across different games
+      // This would also require creating interfaces for the same logic and boards behaviours
       // And would be overcomplicated for this example
       CheckersGameBoard board =
           new CheckersBoardBuilder()
               .initializeBoardDimensions(8, 8, 80)
               .constructGrid()
               .placePieces()
+              .injectGameLogic()
               .attachEventHandlers()
               .build();
-
-      board.setGameLogic(new CheckersGameLogic(board));
 
       leftLayout.getChildren().addAll(board);
       Scene scene = new Scene(leftLayout);

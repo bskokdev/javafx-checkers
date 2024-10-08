@@ -1,5 +1,6 @@
 package dev.bskok.checkers.board;
 
+import dev.bskok.checkers.logic.CheckersGameLogic;
 import dev.bskok.checkers.logic.ColorConverter;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -66,6 +67,14 @@ public class CheckersBoardBuilder {
 
   public CheckersBoardBuilder attachEventHandlers() {
     this.board.attachOnMouseClickedEventHandler();
+    return this;
+  }
+
+  // FIXME(bskok): not sure if this is the best approach for injecting the game logic
+  // I'm concerned about the circular dependency between board and game logic objects
+  public CheckersBoardBuilder injectGameLogic() {
+    CheckersGameLogic gameLogic = new CheckersGameLogic(this.board);
+    this.board.setGameLogic(gameLogic);
     return this;
   }
 

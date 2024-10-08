@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+// TODO(bskok): add unit tests for the core game logic
 public class CheckersGameLogic {
   public static final Logger log = LoggerFactory.getLogger(CheckersGameLogic.class);
 

@@ -4,22 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="013d2d88-a769-4ab0-9e7c-80752e311b3b" name="Changes" comment="added git remote">
-      <change afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="013d2d88-a769-4ab0-9e7c-80752e311b3b" name="Changes" comment="cleaned up overcomplicated stuff">
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/CheckersApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/CheckersApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/DTOs/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/board/Move.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/board/BoardType.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/board/CheckersBoardBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/board/CheckersBoardBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/board/CheckersGameBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/board/CheckersGameBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/board/GameBoardFactory.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/board/IBoardBuilder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/board/IGameBoard.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/exceptions/GameBoardCreationException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/gameLogic/CheckersGameLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/logic/CheckersGameLogic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/gameLogic/ColorConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/logic/ColorConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/gameLogic/IGameLogic.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/logic/CheckersGameLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/logic/CheckersGameLogic.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,7 +132,7 @@
       <workItem from="1727965867901" duration="1659000" />
       <workItem from="1728044746838" duration="3180000" />
       <workItem from="1728209094395" duration="4048000" />
-      <workItem from="1728379268783" duration="1005000" />
+      <workItem from="1728379268783" duration="1341000" />
     </task>
     <task id="LOCAL-00001" summary="upload to GitHub">
       <option name="closed" value="true" />
@@ -162,7 +150,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728225367648</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="cleaned up overcomplicated stuff">
+      <option name="closed" value="true" />
+      <created>1728380333630</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1728380333630</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -182,7 +178,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="upload to GitHub" />
     <MESSAGE value="added git remote" />
-    <option name="LAST_COMMIT_MESSAGE" value="added git remote" />
+    <MESSAGE value="cleaned up overcomplicated stuff" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleaned up overcomplicated stuff" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
