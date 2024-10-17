@@ -1,12 +1,18 @@
 package dev.bskok.checkers;
 
-import dev.bskok.checkers.board.*;
+import dev.bskok.checkers.game.BoardGame;
+import dev.bskok.checkers.game.BoardGameFactory;
+import dev.bskok.checkers.game.BoardGameType;
+import dev.bskok.checkers.game.CheckersGame;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+// Game could
+// which would contain the board and the state of the game
 
 public class CheckersApp extends Application {
   private static final Logger log = LoggerFactory.getLogger(CheckersApp.class);
@@ -18,20 +24,9 @@ public class CheckersApp extends Application {
     // TODO(bskok): there should also be a table with number of moves per game on the right
     try {
       VBox leftLayout = new VBox();
+      BoardGame checkersGame = BoardGameFactory.getBoardGame(BoardGameType.CHECKERS);
+      leftLayout.getChildren().addAll(checkersGame.getBoard());
 
-      // Possible replace with a board factory to support multiple boards
-      // This would also require creating interfaces for the same logic and boards behaviours
-      // And would be overcomplicated for this example
-      CheckersGameBoard board =
-          new CheckersBoardBuilder()
-              .initializeBoardDimensions(8, 8, 80)
-              .constructGrid()
-              .placePieces()
-              .injectGameLogic()
-              .attachEventHandlers()
-              .build();
-
-      leftLayout.getChildren().addAll(board);
       Scene scene = new Scene(leftLayout);
 
       primaryStage.setTitle("Checkers");

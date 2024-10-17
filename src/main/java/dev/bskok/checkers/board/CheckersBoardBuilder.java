@@ -1,7 +1,9 @@
 package dev.bskok.checkers.board;
 
-import dev.bskok.checkers.logic.CheckersGameLogic;
-import dev.bskok.checkers.logic.ColorConverter;
+import dev.bskok.checkers.game.BoardGame;
+import dev.bskok.checkers.piece.CheckersPiece;
+import dev.bskok.checkers.piece.ColorConverter;
+import dev.bskok.checkers.piece.Piece;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import org.slf4j.Logger;
@@ -9,10 +11,10 @@ import org.slf4j.LoggerFactory;
 
 public class CheckersBoardBuilder {
   public static final Logger log = LoggerFactory.getLogger(CheckersBoardBuilder.class);
-  private CheckersGameBoard board;
+  private CheckersBoard board;
 
   public CheckersBoardBuilder initializeBoardDimensions(int rows, int cols, int tileSize) {
-    this.board = new CheckersGameBoard(tileSize, rows, cols);
+    this.board = new CheckersBoard(tileSize, rows, cols);
     log.debug("Set board dimensions to: [rows={}, cols={}, tileSize={}]", rows, cols, tileSize);
     return this;
   }
@@ -47,7 +49,7 @@ public class CheckersBoardBuilder {
     for (int row = 0; row < 3; row++) {
       for (int col = 0; col < cols; col++) {
         if ((row + col) % 2 != 0) {
-          Piece redPiece = new Piece(Color.RED, pieceRadius);
+          Piece redPiece = new CheckersPiece(Color.RED, pieceRadius);
           board.placePieceAt(redPiece, row, col);
         }
       }
@@ -56,7 +58,7 @@ public class CheckersBoardBuilder {
     for (int row = rows - 3; row < rows; row++) {
       for (int col = 0; col < cols; col++) {
         if ((row + col) % 2 != 0) {
-          Piece aquaPiece = new Piece(Color.AQUA, pieceRadius);
+          Piece aquaPiece = new CheckersPiece(Color.AQUA, pieceRadius);
           board.placePieceAt(aquaPiece, row, col);
         }
       }
@@ -65,20 +67,12 @@ public class CheckersBoardBuilder {
     return this;
   }
 
-  public CheckersBoardBuilder attachEventHandlers() {
-    this.board.attachOnMouseClickedEventHandler();
+  public CheckersBoardBuilder attachEventHandlers(BoardGame boardGame) {
+    board.attachOnClickEventHandler(boardGame);
     return this;
   }
 
-  // FIXME(bskok): not sure if this is the best approach for injecting the game logic
-  // I'm concerned about the circular dependency between board and game logic objects
-  public CheckersBoardBuilder injectGameLogic() {
-    CheckersGameLogic gameLogic = new CheckersGameLogic(this.board);
-    this.board.setGameLogic(gameLogic);
-    return this;
-  }
-
-  public CheckersGameBoard build() {
+  public CheckersBoard build() {
     return this.board;
   }
 }

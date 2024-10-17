@@ -14,10 +14,15 @@ module dev.bskok.checkers {
   opens dev.bskok.checkers.board to
       javafx.fxml;
 
-  exports dev.bskok.checkers.logic;
+  exports dev.bskok.checkers.board;
+  exports dev.bskok.checkers.piece;
 
-  opens dev.bskok.checkers.logic to
+  opens dev.bskok.checkers.piece to
       javafx.fxml;
 
-  exports dev.bskok.checkers.board;
+  exports dev.bskok.checkers.piece.player;
+  exports dev.bskok.checkers.game;
+
+  opens dev.bskok.checkers.game to
+      javafx.fxml;
 }

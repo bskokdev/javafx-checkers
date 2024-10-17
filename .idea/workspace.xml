@@ -5,9 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="013d2d88-a769-4ab0-9e7c-80752e311b3b" name="Changes" comment="cleaned up overcomplicated stuff">
+      <change afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/board/Board.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/board/CheckersBoard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/game/BoardGame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/game/BoardGameFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/game/BoardGameType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/game/CheckersGame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/piece/CheckersPiece.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/piece/Movable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/piece/PieceType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/piece/Promotable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/piece/Selectable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/player/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/CheckersApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/CheckersApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/board/CheckersBoardBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/board/CheckersBoardBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/logic/CheckersGameLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/logic/CheckersGameLogic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/board/CheckersGameBoard.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/board/Piece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/piece/Piece.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/logic/CheckersGameLogic.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/logic/ColorConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/piece/ColorConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/logback.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/logback.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,8 +37,8 @@
       <list>
         <option value="Record" />
         <option value="Interface" />
-        <option value="Enum" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -36,7 +54,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/bskokdev/javafx-checkers.git&quot;,
-    &quot;accountId&quot;: &quot;685d17bd-6e90-40a5-ad60-9a32c8d7ff1f&quot;
+    &quot;accountId&quot;: &quot;0d78eb8b-7235-4a94-ac43-5f801e828975&quot;
   }
 }</component>
   <component name="MavenImportPreferences">
@@ -55,28 +73,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.CheckersApp.executor&quot;: &quot;Run&quot;,
-    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.checkers [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.checkers [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.checkers [validate].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.checkers [verify].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/boris/code/quarkus&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.CheckersApp.executor": "Run",
+    "Application.HelloApplication.executor": "Run",
+    "Maven.checkers [clean].executor": "Run",
+    "Maven.checkers [install].executor": "Run",
+    "Maven.checkers [validate].executor": "Run",
+    "Maven.checkers [verify].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/boris/code/quarkus",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "google-java-format.settings",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\boris\code\checkers\src\main\resources" />
@@ -89,7 +107,7 @@
       <module name="checkers" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="dev.bskok.checkers.board.Piece" />
+          <option name="PATTERN" value="dev.bskok.checkers.piece.Piece" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -106,8 +124,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.387" />
-        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.387" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
       </set>
     </attachedChunks>
   </component>
@@ -133,6 +151,9 @@
       <workItem from="1728044746838" duration="3180000" />
       <workItem from="1728209094395" duration="4048000" />
       <workItem from="1728379268783" duration="1341000" />
+      <workItem from="1729175421412" duration="12426000" />
+      <workItem from="1729190913781" duration="24000" />
+      <workItem from="1729190947828" duration="4905000" />
     </task>
     <task id="LOCAL-00001" summary="upload to GitHub">
       <option name="closed" value="true" />
