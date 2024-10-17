@@ -11,9 +11,6 @@ import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// Game could
-// which would contain the board and the state of the game
-
 public class CheckersApp extends Application {
   private static final Logger log = LoggerFactory.getLogger(CheckersApp.class);
 
