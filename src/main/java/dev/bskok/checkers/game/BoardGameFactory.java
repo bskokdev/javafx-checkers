@@ -20,7 +20,7 @@ public class BoardGameFactory {
     return switch (gameType) {
       case CHECKERS ->
           new CheckersBoardBuilder()
-              .initializeBoardDimensions(8, 8, 50)
+              .initializeBoardDimensions(8, 8, 80)
               .constructGrid()
               .placePieces()
               .attachEventHandlers(game)
