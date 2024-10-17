@@ -210,9 +210,6 @@ public class CheckersGame implements BoardGame {
 
     Optional<Piece> capturingPiece = board.getPieceAt(move.fromRow(), move.fromCol());
     Optional<Piece> pieceAtToBeCapturedPos = board.getPieceAt(capturedRow, capturedCol);
-    if (pieceAtToBeCapturedPos.isEmpty() || capturingPiece.isEmpty()) {
-      return false;
-    }
 
     return pieceAtToBeCapturedPos.map(Piece::getColor) != capturingPiece.map(Piece::getColor);
   }
