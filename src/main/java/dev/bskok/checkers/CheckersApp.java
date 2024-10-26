@@ -24,6 +24,7 @@ public class CheckersApp extends Application {
       BoardGame checkersGame = BoardGameFactory.getBoardGame(BoardGameType.CHECKERS);
       leftLayout.getChildren().addAll(checkersGame.getBoard());
 
+      // TODO(bskok): create start, end scenes and figure out how to swap them
       Scene scene = new Scene(leftLayout);
 
       primaryStage.setTitle("Checkers");

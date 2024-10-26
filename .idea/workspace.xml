@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="013d2d88-a769-4ab0-9e7c-80752e311b3b" name="Changes" comment="refactor into functional and more extensible manner">
+    <list default="true" id="013d2d88-a769-4ab0-9e7c-80752e311b3b" name="Changes" comment="code cleanup">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/CheckersApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/CheckersApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/game/BoardGameFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/game/BoardGameFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/board/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/board/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/board/CheckersBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/board/CheckersBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/game/CheckersGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/game/CheckersGame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,28 +57,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.CheckersApp.executor": "Run",
-    "Application.HelloApplication.executor": "Run",
-    "Maven.checkers [clean].executor": "Run",
-    "Maven.checkers [install].executor": "Run",
-    "Maven.checkers [validate].executor": "Run",
-    "Maven.checkers [verify].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/boris/code/quarkus",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "google-java-format.settings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.CheckersApp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.checkers [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.checkers [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.checkers [validate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.checkers [verify].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/boris/code/quarkus&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\boris\code\checkers\src\main\resources" />
@@ -135,7 +137,17 @@
       <workItem from="1728379268783" duration="1341000" />
       <workItem from="1729175421412" duration="12426000" />
       <workItem from="1729190913781" duration="24000" />
-      <workItem from="1729190947828" duration="5257000" />
+      <workItem from="1729190947828" duration="7888000" />
+      <workItem from="1729201199692" duration="1289000" />
+      <workItem from="1729204712254" duration="1380000" />
+      <workItem from="1729247792495" duration="4881000" />
+      <workItem from="1729501110886" duration="32000" />
+      <workItem from="1729545996468" duration="7015000" />
+      <workItem from="1729715924027" duration="20000" />
+      <workItem from="1729715952433" duration="114000" />
+      <workItem from="1729743983284" duration="686000" />
+      <workItem from="1729884907431" duration="4990000" />
+      <workItem from="1729982153943" duration="881000" />
     </task>
     <task id="LOCAL-00001" summary="upload to GitHub">
       <option name="closed" value="true" />
@@ -169,7 +181,31 @@
       <option name="project" value="LOCAL" />
       <updated>1729196068295</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="cleaned up comments">
+      <option name="closed" value="true" />
+      <created>1729196426052</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1729196426052</updated>
+    </task>
+    <task id="LOCAL-00006" summary="bigger tile size">
+      <option name="closed" value="true" />
+      <created>1729196435448</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1729196435448</updated>
+    </task>
+    <task id="LOCAL-00007" summary="code cleanup">
+      <option name="closed" value="true" />
+      <created>1729196446376</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1729196446376</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -191,7 +227,10 @@
     <MESSAGE value="added git remote" />
     <MESSAGE value="cleaned up overcomplicated stuff" />
     <MESSAGE value="refactor into functional and more extensible manner" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor into functional and more extensible manner" />
+    <MESSAGE value="cleaned up comments" />
+    <MESSAGE value="bigger tile size" />
+    <MESSAGE value="code cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="code cleanup" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

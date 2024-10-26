@@ -1,19 +1,15 @@
 package dev.bskok.checkers.game;
 
-import dev.bskok.checkers.board.Move;
 import dev.bskok.checkers.board.CheckersBoard;
-import dev.bskok.checkers.piece.ColorConverter;
-import dev.bskok.checkers.piece.CheckersPiece;
-import dev.bskok.checkers.piece.Piece;
-import dev.bskok.checkers.piece.PieceType;
+import dev.bskok.checkers.board.Move;
+import dev.bskok.checkers.piece.*;
 import dev.bskok.checkers.piece.player.Player;
+import java.util.Optional;
 import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Optional;
 
 // TODO(bskok): add unit tests for the core game logic
 public class CheckersGame implements BoardGame {
@@ -44,7 +40,8 @@ public class CheckersGame implements BoardGame {
 
   public void selectPieceAt(int row, int col) {
     board
-        .getPieceAt(row, col)
+        .getMovableAt(row, col)
+        .map(piece -> (Piece) piece)
         .filter(piece -> piece.getColor() == playerWithCurrentTurn.color())
         .ifPresent(
             piece -> {
@@ -82,7 +79,7 @@ public class CheckersGame implements BoardGame {
     }
 
     log.info("Move is valid, moving piece to: [{}, {}]", move.toRow(), move.toCol());
-    board.movePieceOnBoard(selectedPiece, move.toRow(), move.toCol());
+    board.moveMovableOnBoard(selectedPiece, move.toRow(), move.toCol());
 
     if (selectedPiece instanceof CheckersPiece selectedCheckersPiece) {
       if (selectedCheckersPiece.shouldBePromotedToKing(board, move.toRow(), move.toCol())) {
@@ -104,7 +101,11 @@ public class CheckersGame implements BoardGame {
     Color playerColor = player.color();
     for (int row = 0; row < board.getRows(); row++) {
       for (int col = 0; col < board.getCols(); col++) {
-        if (board.getPieceAt(row, col).filter(piece -> piece.getColor() == playerColor).isEmpty()) {
+        if (board
+            .getMovableAt(row, col)
+            .map(piece -> (Piece) piece)
+            .filter(piece -> piece.getColor() == playerColor)
+            .isEmpty()) {
           continue;
         }
 
@@ -130,7 +131,8 @@ public class CheckersGame implements BoardGame {
     for (int row = 0; row < rows; row++) {
       for (int col = 0; col < cols; col++) {
         if (board
-            .getPieceAt(row, col)
+            .getMovableAt(row, col)
+            .map(piece -> (Piece) piece)
             .filter(piece -> piece.getColor() == playerColor)
             .isPresent()) {
           log.trace("{} has pieces on the board", ColorConverter.getColorName(playerColor));
@@ -148,7 +150,7 @@ public class CheckersGame implements BoardGame {
     int toRow = move.toRow();
     int toCol = move.toCol();
 
-    if (!board.isPositionInBounds(toRow, toCol) || !board.isPositionInBounds(fromRow, fromCol)) {
+    if (board.isPositionOutOfBounds(toRow, toCol) || board.isPositionOutOfBounds(fromRow, fromCol)) {
       log.trace(
           "Invalid move: from position [{}, {}] or to position [{}, {}] is out of bounds",
           fromRow,
@@ -158,13 +160,13 @@ public class CheckersGame implements BoardGame {
       return false;
     }
 
-    if (board.getPieceAt(toRow, toCol).isPresent()) {
+    if (board.getMovableAt(toRow, toCol).isPresent()) {
       log.trace("Invalid move: target position [{}, {}] is not empty", toRow, toCol);
       return false;
     }
 
     return board
-        .getPieceAt(fromRow, fromCol)
+        .getMovableAt(fromRow, fromCol)
         .filter(piece -> piece instanceof CheckersPiece)
         .map(piece -> (CheckersPiece) piece)
         .map(checkersPiece -> isValidCheckersMove(checkersPiece, move))
@@ -196,7 +198,7 @@ public class CheckersGame implements BoardGame {
     int capturedRow = (move.fromRow() + move.toRow()) / 2;
     int capturedCol = (move.fromCol() + move.toCol()) / 2;
     log.info("Piece at [{}, {}] has been captured", capturedRow, capturedCol);
-    board.removePieceAt(capturedRow, capturedCol);
+    board.removeMovableAt(capturedRow, capturedCol);
   }
 
   private boolean isCaptureDuringMove(Move move) {
@@ -208,10 +210,20 @@ public class CheckersGame implements BoardGame {
     int capturedRow = (move.fromRow() + move.toRow()) / 2;
     int capturedCol = (move.fromCol() + move.toCol()) / 2;
 
-    Optional<Piece> capturingPiece = board.getPieceAt(move.fromRow(), move.fromCol());
-    Optional<Piece> pieceAtToBeCapturedPos = board.getPieceAt(capturedRow, capturedCol);
+    Optional<Movable> attackingPiece = board.getMovableAt(move.fromRow(), move.fromCol());
+    Optional<Movable> targetPiece = board.getMovableAt(capturedRow, capturedCol);
 
-    return pieceAtToBeCapturedPos.map(Piece::getColor) != capturingPiece.map(Piece::getColor);
+    return attackingPiece
+        .flatMap(
+            capturing ->
+                targetPiece.map(
+                    target -> {
+                      if (capturing instanceof Piece && target instanceof Piece) {
+                        return ((Piece) capturing).getColor() != ((Piece) target).getColor();
+                      }
+                      throw new IllegalStateException("One or both Movables are not Pieces");
+                    }))
+        .orElse(false);
   }
 
   private void deselectSelectedPiece() {

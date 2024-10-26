@@ -50,7 +50,7 @@ public class CheckersBoardBuilder {
       for (int col = 0; col < cols; col++) {
         if ((row + col) % 2 != 0) {
           Piece redPiece = new CheckersPiece(Color.RED, pieceRadius);
-          board.placePieceAt(redPiece, row, col);
+          board.placeMovableAt(redPiece, row, col);
         }
       }
     }
@@ -59,7 +59,7 @@ public class CheckersBoardBuilder {
       for (int col = 0; col < cols; col++) {
         if ((row + col) % 2 != 0) {
           Piece aquaPiece = new CheckersPiece(Color.AQUA, pieceRadius);
-          board.placePieceAt(aquaPiece, row, col);
+          board.placeMovableAt(aquaPiece, row, col);
         }
       }
     }

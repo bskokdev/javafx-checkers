@@ -3,6 +3,7 @@ package dev.bskok.checkers.board;
 import dev.bskok.checkers.game.BoardGame;
 import dev.bskok.checkers.piece.CheckersPiece;
 import dev.bskok.checkers.piece.ColorConverter;
+import dev.bskok.checkers.piece.Movable;
 import dev.bskok.checkers.piece.Piece;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -24,7 +25,7 @@ public class CheckersBoard extends GridPane implements Board {
 
   private final int[][] topPlayerDeltas;
   private final int[][] bottomPlayerDeltas;
-  private final Piece[][] pieces;
+  private final Movable[][] pieces;
 
   public CheckersBoard(int tileSize, int rows, int cols) {
     this.tileSize = tileSize;
@@ -36,25 +37,25 @@ public class CheckersBoard extends GridPane implements Board {
   }
 
   @Override
-  public void placePieceAt(Piece piece, int row, int col) {
+  public void placeMovableAt(Movable piece, int row, int col) {
     pieces[row][col] = piece;
     piece.moveTo(row, col);
-    this.add(piece, col, row);
-
-    // center the piece within the rectangle cell
-    GridPane.setHalignment(piece, HPos.CENTER);
-    GridPane.setValignment(piece, VPos.CENTER);
-
-    log.trace(
-        "Placed {} piece at position on the board: [{}, {}]",
-        ColorConverter.getColorName(piece.getColor()),
-        row,
-        col);
+    if (piece instanceof Piece pieceNode) {
+      this.add(pieceNode, col, row);
+      // center the piece within the rectangle cell
+      GridPane.setHalignment(pieceNode, HPos.CENTER);
+      GridPane.setValignment(pieceNode, VPos.CENTER);
+      log.trace(
+              "Placed {} piece at position on the board: [{}, {}]",
+              ColorConverter.getColorName(pieceNode.getColor()),
+              row,
+              col);
+    }
   }
 
   @Override
-  public void removePieceAt(int row, int col) {
-    getPieceAt(row, col)
+  public void removeMovableAt(int row, int col) {
+    getMovableAt(row, col)
         .ifPresent(
             pieceToRemove -> {
               pieces[row][col] = null;
@@ -64,7 +65,7 @@ public class CheckersBoard extends GridPane implements Board {
   }
 
   @Override
-  public void movePieceOnBoard(Piece piece, int toRow, int toCol) {
+  public void moveMovableOnBoard(Movable piece, int toRow, int toCol) {
     int fromRow = piece.getRow();
     int fromCol = piece.getCol();
     log.debug(
@@ -73,8 +74,8 @@ public class CheckersBoard extends GridPane implements Board {
         fromCol,
         toRow,
         toCol);
-    removePieceAt(fromRow, fromCol);
-    placePieceAt(piece, toRow, toCol);
+    removeMovableAt(fromRow, fromCol);
+    placeMovableAt(piece, toRow, toCol);
   }
 
   @Override
@@ -91,12 +92,12 @@ public class CheckersBoard extends GridPane implements Board {
   }
 
   @Override
-  public boolean isPositionInBounds(int row, int col) {
-    return row >= 0 && row < rows && col >= 0 && col < cols;
+  public boolean isPositionOutOfBounds(int row, int col) {
+    return row < 0 || row >= rows || col < 0 || col >= cols;
   }
 
   @Override
-  public Optional<Piece> getPieceAt(int row, int col) {
+  public Optional<Movable> getMovableAt(int row, int col) {
     return Optional.ofNullable(pieces[row][col]);
   }
 
