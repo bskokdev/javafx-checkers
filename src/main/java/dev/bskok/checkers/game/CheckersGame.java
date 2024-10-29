@@ -2,6 +2,7 @@ package dev.bskok.checkers.game;
 
 import dev.bskok.checkers.board.CheckersBoard;
 import dev.bskok.checkers.board.Move;
+import dev.bskok.checkers.events.GameOverEvent;
 import dev.bskok.checkers.piece.*;
 import dev.bskok.checkers.piece.player.Player;
 import java.util.Optional;
@@ -91,10 +92,13 @@ public class CheckersGame implements BoardGame {
     swapPlayerTurns();
     handleCaptureMove(move);
 
-    // TODO(bskok): display dialog window if winner present and stop the game
     getWinner()
         .ifPresent(
-            winner -> log.info("The winner is: {}", ColorConverter.getColorName(winner.color())));
+            winner -> {
+              log.info("The winner is: {}", ColorConverter.getColorName(winner.color()));
+              GameOverEvent gameOverEvent = new GameOverEvent(winner);
+              board.fireEvent(gameOverEvent);
+            });
   }
 
   private boolean areValidMovesLeftForPlayer(Player player) {
@@ -150,7 +154,8 @@ public class CheckersGame implements BoardGame {
     int toRow = move.toRow();
     int toCol = move.toCol();
 
-    if (board.isPositionOutOfBounds(toRow, toCol) || board.isPositionOutOfBounds(fromRow, fromCol)) {
+    if (board.isPositionOutOfBounds(toRow, toCol)
+        || board.isPositionOutOfBounds(fromRow, fromCol)) {
       log.trace(
           "Invalid move: from position [{}, {}] or to position [{}, {}] is out of bounds",
           fromRow,

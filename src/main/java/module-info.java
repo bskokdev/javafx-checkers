@@ -25,4 +25,6 @@ module dev.bskok.checkers {
 
   opens dev.bskok.checkers.game to
       javafx.fxml;
+    exports dev.bskok.checkers.controller;
+    opens dev.bskok.checkers.controller to javafx.fxml;
 }
