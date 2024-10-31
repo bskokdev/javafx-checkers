@@ -20,8 +20,7 @@ module dev.bskok.checkers {
   opens dev.bskok.checkers.piece to
       javafx.fxml;
 
-  exports dev.bskok.checkers.piece.player;
-  exports dev.bskok.checkers.game;
+    exports dev.bskok.checkers.game;
 
   opens dev.bskok.checkers.game to
       javafx.fxml;

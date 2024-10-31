@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 import lombok.Getter;
 
 @Getter
-public class Piece extends Circle implements Movable, Selectable {
+public class Piece extends Circle implements Colorable, Selectable {
   private boolean isSelected;
 
   protected int row;
@@ -34,7 +34,7 @@ public class Piece extends Circle implements Movable, Selectable {
   }
 
   @Override
-  public void unselect() {
+  public void deselect() {
     this.isSelected = false;
   }
 }

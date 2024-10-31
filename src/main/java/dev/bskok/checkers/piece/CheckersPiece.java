@@ -1,6 +1,6 @@
 package dev.bskok.checkers.piece;
 
-import dev.bskok.checkers.board.CheckersBoard;
+import dev.bskok.checkers.board.Board;
 import javafx.scene.paint.Color;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +14,7 @@ public class CheckersPiece extends Piece implements Promotable {
 
   @Override
   public boolean shouldBePromotedTo(
-      PieceType pieceType, CheckersBoard checkersBoard, int row, int col) {
+          PieceType pieceType, Board checkersBoard, int row, int col) {
     return switch (pieceType) {
       case NORMAL -> true;
       case KING ->
@@ -39,7 +39,7 @@ public class CheckersPiece extends Piece implements Promotable {
     }
   }
 
-  public boolean shouldBePromotedToKing(CheckersBoard board, int row, int col) {
+  public boolean shouldBePromotedToKing(Board board, int row, int col) {
     return shouldBePromotedTo(PieceType.KING, board, row, col);
   }
 

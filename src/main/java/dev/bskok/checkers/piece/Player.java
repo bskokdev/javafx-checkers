@@ -1,4 +1,4 @@
-package dev.bskok.checkers.piece.player;
+package dev.bskok.checkers.piece;
 
 import javafx.scene.paint.Color;
 

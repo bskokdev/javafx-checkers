@@ -19,6 +19,6 @@ public class ColorConverter {
     } catch (IllegalAccessException e) {
       log.error("Failed to convert color to name string: {}", e.getMessage());
     }
-    return "CUSTOM";
+    return "CUSTOM COLOR";
   }
 }

@@ -1,10 +1,10 @@
 package dev.bskok.checkers.game;
 
-import dev.bskok.checkers.board.CheckersBoard;
+import dev.bskok.checkers.board.Board;
 import dev.bskok.checkers.board.Move;
 import dev.bskok.checkers.events.GameOverEvent;
 import dev.bskok.checkers.piece.*;
-import dev.bskok.checkers.piece.player.Player;
+import dev.bskok.checkers.piece.Player;
 import java.util.Optional;
 import javafx.scene.paint.Color;
 import lombok.Getter;
@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 public class CheckersGame implements BoardGame {
   public static final Logger log = LoggerFactory.getLogger(CheckersGame.class);
 
-  @Getter @Setter private CheckersBoard board;
+  @Getter @Setter private Board board;
 
   private final Player playerA; // RED
   private final Player playerB; // AQUA
@@ -39,14 +39,16 @@ public class CheckersGame implements BoardGame {
     }
   }
 
+  @Override
   public void selectPieceAt(int row, int col) {
     board
-        .getMovableAt(row, col)
+        .getPieceAt(row, col)
         .map(piece -> (Piece) piece)
         .filter(piece -> piece.getColor() == playerWithCurrentTurn.color())
         .ifPresent(
             piece -> {
               selectedPiece = piece;
+              selectedPiece.select();
               log.trace("User selected piece at position: [{}, {}]", row, col);
             });
   }
@@ -80,7 +82,7 @@ public class CheckersGame implements BoardGame {
     }
 
     log.info("Move is valid, moving piece to: [{}, {}]", move.toRow(), move.toCol());
-    board.moveMovableOnBoard(selectedPiece, move.toRow(), move.toCol());
+    board.movePieceOnBoard(selectedPiece, move.toRow(), move.toCol());
 
     if (selectedPiece instanceof CheckersPiece selectedCheckersPiece) {
       if (selectedCheckersPiece.shouldBePromotedToKing(board, move.toRow(), move.toCol())) {
@@ -106,14 +108,14 @@ public class CheckersGame implements BoardGame {
     for (int row = 0; row < board.getRows(); row++) {
       for (int col = 0; col < board.getCols(); col++) {
         if (board
-            .getMovableAt(row, col)
+            .getPieceAt(row, col)
             .map(piece -> (Piece) piece)
             .filter(piece -> piece.getColor() == playerColor)
             .isEmpty()) {
           continue;
         }
 
-        for (int[] direction : board.getDeltasForPlayer(playerColor)) {
+        for (int[] direction : board.getDeltasForPlayer(player)) {
           Move normalMove = new Move(row, col, direction[0] + row, direction[1] + col);
           Move captureMove = new Move(row, col, direction[0] * 2 + row, direction[1] * 2 + col);
           if (isMoveValid(normalMove) || isMoveValid(captureMove)) {
@@ -135,7 +137,7 @@ public class CheckersGame implements BoardGame {
     for (int row = 0; row < rows; row++) {
       for (int col = 0; col < cols; col++) {
         if (board
-            .getMovableAt(row, col)
+            .getPieceAt(row, col)
             .map(piece -> (Piece) piece)
             .filter(piece -> piece.getColor() == playerColor)
             .isPresent()) {
@@ -165,13 +167,13 @@ public class CheckersGame implements BoardGame {
       return false;
     }
 
-    if (board.getMovableAt(toRow, toCol).isPresent()) {
+    if (board.getPieceAt(toRow, toCol).isPresent()) {
       log.trace("Invalid move: target position [{}, {}] is not empty", toRow, toCol);
       return false;
     }
 
     return board
-        .getMovableAt(fromRow, fromCol)
+        .getPieceAt(fromRow, fromCol)
         .filter(piece -> piece instanceof CheckersPiece)
         .map(piece -> (CheckersPiece) piece)
         .map(checkersPiece -> isValidCheckersMove(checkersPiece, move))
@@ -203,7 +205,7 @@ public class CheckersGame implements BoardGame {
     int capturedRow = (move.fromRow() + move.toRow()) / 2;
     int capturedCol = (move.fromCol() + move.toCol()) / 2;
     log.info("Piece at [{}, {}] has been captured", capturedRow, capturedCol);
-    board.removeMovableAt(capturedRow, capturedCol);
+    board.removePieceAt(capturedRow, capturedCol);
   }
 
   private boolean isCaptureDuringMove(Move move) {
@@ -215,8 +217,8 @@ public class CheckersGame implements BoardGame {
     int capturedRow = (move.fromRow() + move.toRow()) / 2;
     int capturedCol = (move.fromCol() + move.toCol()) / 2;
 
-    Optional<Movable> attackingPiece = board.getMovableAt(move.fromRow(), move.fromCol());
-    Optional<Movable> targetPiece = board.getMovableAt(capturedRow, capturedCol);
+    Optional<Colorable> attackingPiece = board.getPieceAt(move.fromRow(), move.fromCol());
+    Optional<Colorable> targetPiece = board.getPieceAt(capturedRow, capturedCol);
 
     return attackingPiece
         .flatMap(
@@ -224,18 +226,20 @@ public class CheckersGame implements BoardGame {
                 targetPiece.map(
                     target -> {
                       if (capturing instanceof Piece && target instanceof Piece) {
-                        return ((Piece) capturing).getColor() != ((Piece) target).getColor();
+                        return capturing.getColor() != target.getColor();
                       }
                       throw new IllegalStateException("One or both Movables are not Pieces");
                     }))
         .orElse(false);
   }
 
-  private void deselectSelectedPiece() {
+  @Override
+  public void deselectSelectedPiece() {
     log.trace(
         "{} has deselected the currently selected piece",
         ColorConverter.getColorName(selectedPiece.getColor()));
 
+    selectedPiece.deselect();
     selectedPiece = null;
   }
 

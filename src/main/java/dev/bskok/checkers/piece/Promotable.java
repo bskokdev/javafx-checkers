@@ -1,9 +1,9 @@
 package dev.bskok.checkers.piece;
 
-import dev.bskok.checkers.board.CheckersBoard;
+import dev.bskok.checkers.board.Board;
 
 public interface Promotable {
-  boolean shouldBePromotedTo(PieceType pieceType, CheckersBoard board, int row, int col);
+  boolean shouldBePromotedTo(PieceType pieceType, Board board, int row, int col);
 
   void promoteTo(PieceType promotedType);
 }
