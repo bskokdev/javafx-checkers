@@ -100,8 +100,7 @@ public class CheckersGame implements BoardGame {
         .ifPresent(
             winner -> {
               log.info("The winner is: {}", ColorConverter.getColorName(winner.color()));
-              GameOverEvent gameOverEvent = new GameOverEvent(winner);
-              board.fireEvent(gameOverEvent);
+              board.fireEvent(new GameOverEvent(winner));
             });
   }
 

@@ -54,34 +54,17 @@ public class GameStartController {
         });
     }
 
+    public void initializeWithExistingStage(Stage stage) {
+        this.stage = stage;
+        initialize();
+    }
+
     @FXML
     private void handleStartGame() {
         try {
             int rows = Integer.parseInt(boardSizeField.getText());
-            int cols = Integer.parseInt(boardSizeField2.getText());
-            Player playerA = new Player(player1NameField.getText(), player1ColorPicker.getValue(), true);
-            Player playerB = new Player(player2NameField.getText(), player2ColorPicker.getValue(), false);
-
-            if (rows < 1 || cols < 1) {
-                throw new IllegalArgumentException("Board size must be positive");
-            }
-
-            if (playerA.name().isEmpty() || playerB.name().isEmpty()) {
-                throw new IllegalArgumentException("Player names cannot be empty");
-            }
-
-            // TODO(bskok): extract into a separate method
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/checkers.fxml"));
-            Parent gameRoot = loader.load();
-            GameController gameController = loader.getController();
-
-            GameSettings gameSettings = new GameSettings(rows, cols, playerA, playerB);
-            gameController.initializeWithGameSettings(gameSettings);
-
-            Scene scene = new Scene(gameRoot);
-            stage.setScene(scene);
-            stage.show();
-
+            GameSettings gameSettings = getGameSettings(rows);
+            switchToGameScene(gameSettings);
         } catch (NumberFormatException e) {
             System.err.println("Please enter valid numbers for board size");
         } catch (IllegalArgumentException e) {
@@ -89,5 +72,33 @@ public class GameStartController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private GameSettings getGameSettings(int rows) throws IllegalArgumentException {
+        int cols = Integer.parseInt(boardSizeField2.getText());
+        Player playerA = new Player(player1NameField.getText(), player1ColorPicker.getValue(), true);
+        Player playerB = new Player(player2NameField.getText(), player2ColorPicker.getValue(), false);
+
+        if (rows < 1 || cols < 1) {
+            throw new IllegalArgumentException("Board size must be positive");
+        }
+
+        if (playerA.name().isEmpty() || playerB.name().isEmpty()) {
+            throw new IllegalArgumentException("Player names cannot be empty");
+        }
+
+        return new GameSettings(rows, cols, playerA, playerB);
+    }
+
+    private void switchToGameScene(GameSettings settings) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/checkers.fxml"));
+        Parent gameRoot = loader.load();
+        GameController gameController = loader.getController();
+
+        gameController.initializeWithGameSettings(stage, settings);
+
+        Scene scene = new Scene(gameRoot);
+        stage.setScene(scene);
+        stage.show();
     }
 }

@@ -12,7 +12,7 @@
     <right>
         <VBox spacing="10" alignment="CENTER" style="-fx-padding: 15;">
             <Button text="New Game" onAction="#restartGame"/>
-            <Button text="Exit" onAction="#handleExitButton"/>
+            <Button text="Exit" onAction="#exitGame"/>
         </VBox>
     </right>
 </BorderPane>
