@@ -14,12 +14,11 @@ public class CheckersPiece extends Piece implements Promotable {
 
   @Override
   public boolean shouldBePromotedTo(
-          PieceType pieceType, Board checkersBoard, int row, int col) {
+      PieceType pieceType, Board checkersBoard, Player player, int row, int col) {
     return switch (pieceType) {
       case NORMAL -> true;
       case KING ->
-          (this.color == Color.RED && row == checkersBoard.getRows() - 1)
-              || (this.color == Color.AQUA && row == 0);
+          (player.isTop() && row == checkersBoard.getRows() - 1) || (!player.isTop() && row == 0);
     };
   }
 
@@ -39,8 +38,8 @@ public class CheckersPiece extends Piece implements Promotable {
     }
   }
 
-  public boolean shouldBePromotedToKing(Board board, int row, int col) {
-    return shouldBePromotedTo(PieceType.KING, board, row, col);
+  public boolean shouldBePromotedToKing(Board board, Player player, int row, int col) {
+    return shouldBePromotedTo(PieceType.KING, board, player, row, col);
   }
 
   public boolean isKing() {

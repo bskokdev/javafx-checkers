@@ -4,22 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="013d2d88-a769-4ab0-9e7c-80752e311b3b" name="Changes" comment="added game controller and event handling">
-      <change afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/piece/Colorable.java" afterDir="false" />
+    <list default="true" id="013d2d88-a769-4ab0-9e7c-80752e311b3b" name="Changes" comment="using more high level types instead of concrete implementations">
+      <change afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/controller/GameStartController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/game/GameSettings.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/gameStart.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/CheckersApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/CheckersApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/board/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/board/Board.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/board/CheckersBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/board/CheckersBoard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/board/CheckersBoardBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/board/CheckersBoardBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/controller/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/events/GameOverEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/events/GameOverEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/game/BoardGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/game/BoardGame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/game/CheckersGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/game/CheckersGame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/piece/CheckersPiece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/piece/CheckersPiece.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/piece/ColorConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/piece/ColorConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/piece/Piece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/piece/Piece.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/piece/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/piece/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/piece/Promotable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/piece/Promotable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/piece/player/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/piece/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/checkers.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/checkers.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,8 +30,9 @@
       <list>
         <option value="Record" />
         <option value="Enum" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -85,7 +85,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -161,7 +161,11 @@
       <workItem from="1730210886990" duration="32000" />
       <workItem from="1730230915093" duration="8181000" />
       <workItem from="1730355747009" duration="36000" />
-      <workItem from="1730356048949" duration="2858000" />
+      <workItem from="1730356048949" duration="5501000" />
+      <workItem from="1730378811131" duration="2518000" />
+      <workItem from="1730960312641" duration="47000" />
+      <workItem from="1731065651606" duration="198000" />
+      <workItem from="1731266654005" duration="3463000" />
     </task>
     <task id="LOCAL-00001" summary="upload to GitHub">
       <option name="closed" value="true" />
@@ -235,7 +239,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730240852547</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="using more high level types instead of concrete implementations">
+      <option name="closed" value="true" />
+      <created>1730359014137</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1730359014137</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -262,7 +274,8 @@
     <MESSAGE value="code cleanup" />
     <MESSAGE value="using movable instead of Piece for the board" />
     <MESSAGE value="added game controller and event handling" />
-    <option name="LAST_COMMIT_MESSAGE" value="added game controller and event handling" />
+    <MESSAGE value="using more high level types instead of concrete implementations" />
+    <option name="LAST_COMMIT_MESSAGE" value="using more high level types instead of concrete implementations" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

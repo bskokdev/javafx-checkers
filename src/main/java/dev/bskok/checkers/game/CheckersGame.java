@@ -5,6 +5,7 @@ import dev.bskok.checkers.board.Move;
 import dev.bskok.checkers.events.GameOverEvent;
 import dev.bskok.checkers.piece.*;
 import dev.bskok.checkers.piece.Player;
+import java.util.List;
 import java.util.Optional;
 import javafx.scene.paint.Color;
 import lombok.Getter;
@@ -18,15 +19,15 @@ public class CheckersGame implements BoardGame {
 
   @Getter @Setter private Board board;
 
-  private final Player playerA; // RED
-  private final Player playerB; // AQUA
+  private final Player playerA;
+  private final Player playerB;
 
   private Piece selectedPiece;
   private Player playerWithCurrentTurn;
 
-  public CheckersGame() {
-    this.playerA = new Player(Color.RED);
-    this.playerB = new Player(Color.AQUA);
+  public CheckersGame(Player playerA, Player playerB) {
+    this.playerA = playerA;
+    this.playerB = playerB;
     this.playerWithCurrentTurn = playerA;
   }
 
@@ -54,15 +55,15 @@ public class CheckersGame implements BoardGame {
   }
 
   public Optional<Player> getWinner() {
-    boolean redHasPieces = doesPlayerHavePiecesLeft(playerA);
-    boolean aquaHasPieces = doesPlayerHavePiecesLeft(playerB);
+    boolean hasPlayerAPieces = doesPlayerHavePiecesLeft(playerA);
+    boolean hasPlayerBPieces = doesPlayerHavePiecesLeft(playerB);
 
-    boolean redCanMove = areValidMovesLeftForPlayer(playerA);
-    boolean aquaCanMove = areValidMovesLeftForPlayer(playerB);
+    boolean canPlayerAMove = areValidMovesLeftForPlayer(playerA);
+    boolean canPlayerBMove = areValidMovesLeftForPlayer(playerB);
 
-    if (!redHasPieces || !redCanMove) {
+    if (!hasPlayerAPieces || !canPlayerAMove) {
       return Optional.of(playerB);
-    } else if (!aquaHasPieces || !aquaCanMove) {
+    } else if (!hasPlayerBPieces || !canPlayerBMove) {
       return Optional.of(playerA);
     }
 
@@ -85,7 +86,8 @@ public class CheckersGame implements BoardGame {
     board.movePieceOnBoard(selectedPiece, move.toRow(), move.toCol());
 
     if (selectedPiece instanceof CheckersPiece selectedCheckersPiece) {
-      if (selectedCheckersPiece.shouldBePromotedToKing(board, move.toRow(), move.toCol())) {
+      if (selectedCheckersPiece.shouldBePromotedTo(
+          PieceType.KING, board, playerWithCurrentTurn, move.toRow(), move.toCol())) {
         selectedCheckersPiece.promoteTo(PieceType.KING);
       }
     }
@@ -115,9 +117,10 @@ public class CheckersGame implements BoardGame {
           continue;
         }
 
-        for (int[] direction : board.getDeltasForPlayer(player)) {
-          Move normalMove = new Move(row, col, direction[0] + row, direction[1] + col);
-          Move captureMove = new Move(row, col, direction[0] * 2 + row, direction[1] * 2 + col);
+        for (List<Integer> direction : board.getDeltasForPlayer(player)) {
+          Move normalMove = new Move(row, col, direction.get(0) + row, direction.get(1) + col);
+          Move captureMove =
+              new Move(row, col, direction.get(0) * 2 + row, direction.get(1) * 2 + col);
           if (isMoveValid(normalMove) || isMoveValid(captureMove)) {
             log.trace("{} can still move on the board", ColorConverter.getColorName(playerColor));
             return true;
@@ -181,7 +184,7 @@ public class CheckersGame implements BoardGame {
   }
 
   private boolean isValidCheckersMove(CheckersPiece piece, Move move) {
-    int direction = (piece.getColor() == Color.RED) ? 1 : -1;
+    int direction = (piece.getColor() == playerA.color()) ? 1 : -1;
     if (!piece.isKing() && (move.toRow() - move.fromRow()) * direction < 0) {
       log.trace("Non-king pieces can only move forward!");
       return false;

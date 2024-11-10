@@ -3,6 +3,8 @@ package dev.bskok.checkers.board;
 import dev.bskok.checkers.game.BoardGame;
 import dev.bskok.checkers.piece.Colorable;
 import dev.bskok.checkers.piece.Player;
+
+import java.util.List;
 import java.util.Optional;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -32,5 +34,5 @@ public interface Board {
 
   int getCols();
 
-  int[][] getDeltasForPlayer(Player player);
+  List<List<Integer>> getDeltasForPlayer(Player player);
 }

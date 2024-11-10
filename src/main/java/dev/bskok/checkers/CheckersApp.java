@@ -1,7 +1,9 @@
 package dev.bskok.checkers;
 
+import dev.bskok.checkers.controller.GameStartController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
@@ -12,17 +14,19 @@ public class CheckersApp extends Application {
 
   @Override
   public void start(Stage primaryStage) {
-    // TODO(bskok): add notifications for when we have a winner, etc.
     // TODO(bskok): add reading and writing from/to a file - save result after game ends
     // TODO(bskok): there should also be a table with number of moves per game on the right
-    // TODO(bskok): interfaces seem inconsistent, check if I can extend them
     try {
-      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/checkers.fxml"));
-      Scene scene = new Scene(fxmlLoader.load());
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/gameStart.fxml"));
+      Parent root = loader.load();
 
-      primaryStage.setTitle("Checkers");
+      GameStartController startController = loader.getController();
+      startController.setStage(primaryStage);
+
+      Scene scene = new Scene(root);
       primaryStage.setScene(scene);
       primaryStage.setResizable(false);
+      primaryStage.setTitle("CheckersFX");
       primaryStage.show();
 
       log.info("Checkers application started successfully");

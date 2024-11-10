@@ -7,7 +7,7 @@
 <BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="dev.bskok.checkers.controller.GameController">
     <center>
-        <Pane fx:id="gameBoardContainer" prefWidth="640" prefHeight="640"/>
+        <Pane fx:id="gameBoardContainer"/>
     </center>
     <right>
         <VBox spacing="10" alignment="CENTER" style="-fx-padding: 15;">

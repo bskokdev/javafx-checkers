@@ -4,6 +4,7 @@ import dev.bskok.checkers.game.BoardGame;
 import dev.bskok.checkers.piece.CheckersPiece;
 import dev.bskok.checkers.piece.ColorConverter;
 import dev.bskok.checkers.piece.Piece;
+import dev.bskok.checkers.piece.Player;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import org.slf4j.Logger;
@@ -42,15 +43,15 @@ public class CheckersBoardBuilder {
     return this;
   }
 
-  public CheckersBoardBuilder placePieces() {
+  public CheckersBoardBuilder placePieces(Player playerA, Player playerB) {
     double pieceRadius = (double) board.getTileSize() / 2 - 5;
     int rows = board.getRows();
     int cols = board.getCols();
     for (int row = 0; row < 3; row++) {
       for (int col = 0; col < cols; col++) {
         if ((row + col) % 2 != 0) {
-          Piece redPiece = new CheckersPiece(Color.RED, pieceRadius);
-          board.placePieceAt(redPiece, row, col);
+          Piece playerAPiece = new CheckersPiece(playerA.color(), pieceRadius);
+          board.placePieceAt(playerAPiece, row, col);
         }
       }
     }
@@ -58,8 +59,8 @@ public class CheckersBoardBuilder {
     for (int row = rows - 3; row < rows; row++) {
       for (int col = 0; col < cols; col++) {
         if ((row + col) % 2 != 0) {
-          Piece aquaPiece = new CheckersPiece(Color.AQUA, pieceRadius);
-          board.placePieceAt(aquaPiece, row, col);
+          Piece playerBPiece = new CheckersPiece(playerB.color(), pieceRadius);
+          board.placePieceAt(playerBPiece, row, col);
         }
       }
     }

@@ -2,13 +2,11 @@ package dev.bskok.checkers.board;
 
 import dev.bskok.checkers.game.BoardGame;
 import dev.bskok.checkers.piece.*;
-
-import java.util.Optional;
+import java.util.*;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,17 +18,35 @@ public class CheckersBoard extends GridPane implements Board {
   @Getter private final int rows;
   @Getter private final int cols;
 
-  private final int[][] topPlayerDeltas;
-  private final int[][] bottomPlayerDeltas;
+  private final List<List<Integer>> topPlayerDeltas;
+  private final List<List<Integer>> bottomPlayerDeltas;
   private final Colorable[][] pieces;
 
   public CheckersBoard(int tileSize, int rows, int cols) {
     this.tileSize = tileSize;
     this.rows = rows;
     this.cols = cols;
+    // since we know the dimension of the board, it's better to keep this as a 2D array
     this.pieces = new CheckersPiece[this.rows][this.cols];
-    this.topPlayerDeltas = new int[][] {{1, 1}, {1, -1}, {1, 1}, {1, -1}, {-1, -1}, {-1, 1}};
-    this.bottomPlayerDeltas = new int[][] {{-1, 1}, {-1, -1}, {-1, 1}, {-1, -1}, {1, -1}, {1, 1}};
+    this.topPlayerDeltas =
+        Arrays.asList(
+            List.of(1, 1), // right forward
+            List.of(1, -1), // left forward
+            List.of(1, 1), // right forward jump
+            List.of(1, -1), // left forward jump
+            List.of(-1, -1), // left backward
+            List.of(-1, 1) // right backward
+            );
+
+    this.bottomPlayerDeltas =
+        Arrays.asList(
+            List.of(-1, 1), // right forward
+            List.of(-1, -1), // left forward
+            List.of(-1, 1), // right forward jump
+            List.of(-1, -1), // left forward jump
+            List.of(1, -1), // left backward
+            List.of(1, 1) // right backward
+            );
   }
 
   @Override
@@ -104,13 +120,8 @@ public class CheckersBoard extends GridPane implements Board {
   }
 
   @Override
-  public int[][] getDeltasForPlayer(Player player) {
-    if (player.color() == Color.RED) {
-      return topPlayerDeltas;
-    } else if (player.color() == Color.AQUA) {
-      return bottomPlayerDeltas;
-    }
-
-    return new int[][] {};
+  public List<List<Integer>> getDeltasForPlayer(Player player) {
+    if (player.isTop()) return topPlayerDeltas;
+    return bottomPlayerDeltas;
   }
 }
