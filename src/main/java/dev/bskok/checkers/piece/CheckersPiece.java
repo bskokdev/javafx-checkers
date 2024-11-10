@@ -38,10 +38,6 @@ public class CheckersPiece extends Piece implements Promotable {
     }
   }
 
-  public boolean shouldBePromotedToKing(Board board, Player player, int row, int col) {
-    return shouldBePromotedTo(PieceType.KING, board, player, row, col);
-  }
-
   public boolean isKing() {
     return this.pieceType == PieceType.KING;
   }
