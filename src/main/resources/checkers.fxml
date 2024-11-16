@@ -10,12 +10,6 @@
             minHeight="600"
             styleClass="game-container">
 
-    <top>
-        <HBox alignment="CENTER" styleClass="header-container">
-            <Text fx:id="gameStatus" styleClass="game-status"/>
-        </HBox>
-    </top>
-
     <center>
         <StackPane styleClass="board-container">
             <Pane fx:id="gameBoardContainer" styleClass="game-board"/>
