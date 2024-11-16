@@ -110,6 +110,11 @@ public class CheckersBoard extends GridPane implements Board {
   }
 
   @Override
+  public Colorable[][] getPieces() {
+    return this.pieces;
+  }
+
+  @Override
   public GridPane getPane() {
     return this;
   }

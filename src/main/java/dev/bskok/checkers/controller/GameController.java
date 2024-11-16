@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +28,17 @@ import org.slf4j.LoggerFactory;
 public class GameController implements Initializable {
   private static final Logger log = LoggerFactory.getLogger(GameController.class);
 
+  private final String GAME_START_FXML_PATH = "/start.fxml";
+  private final String GAME_CSS_PATH = "/styles/game.css";
+  private final String START_CSS_PATH = "/styles/start.css";
+
   private static final int TILE_SIZE = 80;
+
+  public Text player1Name;
+  public Text player2Name;
+
+  public Text player1Pieces;
+  public Text player2Pieces;
 
   @FXML private Pane gameBoardContainer;
 
@@ -51,6 +62,7 @@ public class GameController implements Initializable {
 
   private void initializeGame() {
     game = new CheckersGame(gameSettings.playerA(), gameSettings.playerB());
+
     board =
         new CheckersBoardBuilder()
             .initializeBoardDimensions(gameSettings.rows(), gameSettings.cols(), TILE_SIZE)
@@ -62,6 +74,15 @@ public class GameController implements Initializable {
     board.attachOnClickEventHandler(game);
     board.addEventHandler(GameOverEvent.GAME_OVER, event -> handleGameOver());
     game.setBoard(board);
+    initializePlayersState();
+  }
+
+  private void initializePlayersState() {
+    player1Name.setText(gameSettings.playerA().name());
+    player2Name.setText(gameSettings.playerB().name());
+
+    player1Pieces.setText(Integer.toString(game.getPiecesCount(gameSettings.playerA())));
+    player2Pieces.setText(Integer.toString(game.getPiecesCount(gameSettings.playerB())));
   }
 
   public void handleGameOver() {
@@ -98,23 +119,36 @@ public class GameController implements Initializable {
     }
 
     switch (response.getText()) {
-      case "New Game" -> switchToStartMenuScreen();
+      case "New Game" -> createNewGame();
       case "Restart Game" -> restartGame();
       case "Exit" -> exitGame();
     }
   }
 
   private void switchToStartMenuScreen() throws IOException {
-    FXMLLoader gameStartLoader = new FXMLLoader(getClass().getResource("/gameStart.fxml"));
+    FXMLLoader gameStartLoader = new FXMLLoader(getClass().getResource(GAME_START_FXML_PATH));
     Parent gameRoot = gameStartLoader.load();
 
     GameStartController gameStartController = gameStartLoader.getController();
     gameStartController.initializeWithExistingStage(stage);
 
     Scene scene = new Scene(gameRoot);
-    scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/start.css")).toExternalForm());
+    scene
+        .getStylesheets()
+        .add(Objects.requireNonNull(getClass().getResource(START_CSS_PATH)).toExternalForm());
     stage.setScene(scene);
     stage.show();
+  }
+
+  // TODO(bskok): create updateGameState method, which would repaint the board, and update state
+
+  @FXML
+  private void createNewGame() {
+    try {
+      switchToStartMenuScreen();
+    } catch (IOException e) {
+      log.error("Unable to switch to the start menu scene: {}", String.valueOf(e));
+    }
   }
 
   @FXML

@@ -30,20 +30,23 @@
 
             <VBox spacing="10" styleClass="player-info">
                 <Text fx:id="player1Name" styleClass="player-name"/>
-                <Text fx:id="player1Score" styleClass="player-score"/>
+                <Text fx:id="player1Pieces" styleClass="player-score"/>
             </VBox>
 
             <VBox spacing="10" styleClass="player-info">
                 <Text fx:id="player2Name" styleClass="player-name"/>
-                <Text fx:id="player2Score" styleClass="player-score"/>
+                <Text fx:id="player2Pieces" styleClass="player-score"/>
             </VBox>
 
             <Region VBox.vgrow="ALWAYS"/>
 
             <VBox spacing="15" alignment="CENTER">
                 <Button text="New Game"
-                        onAction="#restartGame"
+                        onAction="#createNewGame"
                         styleClass="game-button, new-game-button"/>
+                <Button text="Restart"
+                        onAction="#restartGame"
+                        styleClass="game-button, restart-game-button"/>
                 <Button text="Exit"
                         onAction="#exitGame"
                         styleClass="game-button, exit-button"/>

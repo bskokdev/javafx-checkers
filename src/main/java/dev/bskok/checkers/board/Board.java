@@ -30,6 +30,8 @@ public interface Board {
 
   boolean isPositionOutOfBounds(int row, int col);
 
+  Colorable[][] getPieces();
+
   int getRows();
 
   int getCols();

@@ -16,6 +16,11 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class GameStartController {
+
+    private final String GAME_FXML_PATH = "/checkers.fxml";
+    private final String START_CSS_PATH = "/styles/start.css";
+    private final String GAME_CSS_PATH = "/styles/game.css";
+
     @FXML
     private TextField boardSizeField;
 
@@ -92,14 +97,14 @@ public class GameStartController {
     }
 
     private void switchToGameScene(GameSettings settings) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/checkers.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(GAME_FXML_PATH));
         Parent gameRoot = loader.load();
         GameController gameController = loader.getController();
 
         gameController.initializeWithGameSettings(stage, settings);
 
         Scene scene = new Scene(gameRoot);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/game.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(GAME_CSS_PATH)).toExternalForm());
         stage.setScene(scene);
         stage.show();
     }

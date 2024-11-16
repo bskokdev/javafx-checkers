@@ -69,6 +69,19 @@
     -fx-background-color: #219a52;
 }
 
+.restart-game-button {
+    -fx-background-color: #FFD000;
+    -fx-text-fill: white;
+}
+
+.restart-game-button:hover {
+    -fx-background-color: #FFA500;
+}
+
+.restart--game-button:pressed {
+    -fx-background-color: #FF7B00;
+}
+
 .exit-button {
     -fx-background-color: #e74c3c;
     -fx-text-fill: white;

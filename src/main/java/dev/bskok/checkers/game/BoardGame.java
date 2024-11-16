@@ -15,4 +15,6 @@ public interface BoardGame {
   Optional<Player> getWinner();
 
   void setBoard(Board board);
+
+  int getPiecesCount(Player player);
 }

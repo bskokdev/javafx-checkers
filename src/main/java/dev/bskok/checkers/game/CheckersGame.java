@@ -5,6 +5,7 @@ import dev.bskok.checkers.board.Move;
 import dev.bskok.checkers.events.GameOverEvent;
 import dev.bskok.checkers.piece.*;
 import dev.bskok.checkers.piece.Player;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import javafx.scene.paint.Color;
@@ -22,12 +23,17 @@ public class CheckersGame implements BoardGame {
   private final Player playerA;
   private final Player playerB;
 
+  private int playerAPieces;
+  private int playerBPieces;
+
   private Piece selectedPiece;
   private Player playerWithCurrentTurn;
 
   public CheckersGame(Player playerA, Player playerB) {
     this.playerA = playerA;
     this.playerB = playerB;
+    this.playerAPieces = 0;
+    this.playerBPieces = 0;
     this.playerWithCurrentTurn = playerA;
   }
 
@@ -102,6 +108,16 @@ public class CheckersGame implements BoardGame {
               log.info("The winner is: {}", ColorConverter.getColorName(winner.color()));
               board.fireEvent(new GameOverEvent(winner));
             });
+  }
+
+  public int getPiecesCount(Player player) {
+    Colorable[][] pieces = board.getPieces();
+    // not every piece is non-null, because not every square has a piece
+    return (int)
+        Arrays.stream(pieces)
+            .flatMap(Arrays::stream)
+            .filter(piece -> piece != null && piece.getColor() == player.color())
+            .count();
   }
 
   private boolean areValidMovesLeftForPlayer(Player player) {
