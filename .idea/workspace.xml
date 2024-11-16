@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="013d2d88-a769-4ab0-9e7c-80752e311b3b" name="Changes" comment="removed redundant game status property">
-      <change afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/events/PlayerMoveEvent.java" afterDir="false" />
+    <list default="true" id="013d2d88-a769-4ab0-9e7c-80752e311b3b" name="Changes" comment="implemented mechanics which syncs game state with UI changes">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/styles/dialog.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/controller/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/controller/GameStartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/controller/GameStartController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/game/CheckersGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/game/CheckersGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/checkers.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/checkers.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,7 +160,7 @@
       <workItem from="1731371394641" duration="36000" />
       <workItem from="1731561734279" duration="424000" />
       <workItem from="1731574210183" duration="3080000" />
-      <workItem from="1731759398341" duration="6046000" />
+      <workItem from="1731759398341" duration="7288000" />
     </task>
     <task id="LOCAL-00001" summary="upload to GitHub">
       <option name="closed" value="true" />
@@ -293,7 +290,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731765149188</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="implemented mechanics which syncs game state with UI changes">
+      <option name="closed" value="true" />
+      <created>1731767586849</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1731767586849</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -327,7 +332,8 @@
     <MESSAGE value="added styling" />
     <MESSAGE value="added player labels and piece state" />
     <MESSAGE value="removed redundant game status property" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed redundant game status property" />
+    <MESSAGE value="implemented mechanics which syncs game state with UI changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="implemented mechanics which syncs game state with UI changes" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

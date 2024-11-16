@@ -16,10 +16,13 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -33,6 +36,7 @@ public class GameController implements Initializable {
   private final String GAME_START_FXML_PATH = "/gameStart.fxml";
   private final String GAME_CSS_PATH = "/styles/game.css";
   private final String START_CSS_PATH = "/styles/start.css";
+  private final String DIALOG_CSS_PATH = "/styles/dialog.css";
 
   private static final int TILE_SIZE = 80;
 
@@ -121,9 +125,27 @@ public class GameController implements Initializable {
     alert.setHeaderText("We have a winner!");
     alert.setContentText(String.format("Player %s wins!", winner.name()));
 
-    alert
-        .getButtonTypes()
-        .setAll(new ButtonType("New Game"), new ButtonType("Restart Game"), new ButtonType("Exit"));
+    DialogPane dialogPane = alert.getDialogPane();
+    dialogPane
+        .getStylesheets()
+        .add(Objects.requireNonNull(getClass().getResource(DIALOG_CSS_PATH)).toExternalForm());
+    dialogPane.getStyleClass().add("alert");
+
+    ButtonType newGameBtn = new ButtonType("New Game", ButtonBar.ButtonData.LEFT);
+    ButtonType restartGameBtn = new ButtonType("Restart Game", ButtonBar.ButtonData.OTHER);
+    ButtonType exitBtn = new ButtonType("Exit", ButtonBar.ButtonData.RIGHT);
+    alert.getButtonTypes().setAll(newGameBtn, restartGameBtn, exitBtn);
+
+    alert.setOnShowing(
+        e -> {
+          Node newGameButton = alert.getDialogPane().lookupButton(newGameBtn);
+          Node restartGameButton = alert.getDialogPane().lookupButton(restartGameBtn);
+          Node exitButton = alert.getDialogPane().lookupButton(exitBtn);
+
+          newGameButton.getStyleClass().add("new-game-button");
+          restartGameButton.getStyleClass().add("restart-game-button");
+          exitButton.getStyleClass().add("exit-button");
+        });
 
     return alert;
   }
