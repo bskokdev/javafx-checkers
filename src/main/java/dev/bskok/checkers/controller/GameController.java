@@ -3,6 +3,7 @@ package dev.bskok.checkers.controller;
 import dev.bskok.checkers.board.Board;
 import dev.bskok.checkers.board.CheckersBoardBuilder;
 import dev.bskok.checkers.events.GameOverEvent;
+import dev.bskok.checkers.events.PlayerMoveEvent;
 import dev.bskok.checkers.game.BoardGame;
 import dev.bskok.checkers.game.CheckersGame;
 import dev.bskok.checkers.game.GameSettings;
@@ -20,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
@@ -28,17 +30,23 @@ import org.slf4j.LoggerFactory;
 public class GameController implements Initializable {
   private static final Logger log = LoggerFactory.getLogger(GameController.class);
 
-  private final String GAME_START_FXML_PATH = "/start.fxml";
+  private final String GAME_START_FXML_PATH = "/gameStart.fxml";
   private final String GAME_CSS_PATH = "/styles/game.css";
   private final String START_CSS_PATH = "/styles/start.css";
 
   private static final int TILE_SIZE = 80;
 
-  public Text player1Name;
-  public Text player2Name;
+  @FXML public Text player1Name;
+  @FXML public Text player2Name;
 
-  public Text player1Pieces;
-  public Text player2Pieces;
+  @FXML public Text currentTurn;
+
+  @FXML public Text player1Pieces;
+  @FXML public Text player2Pieces;
+
+  @FXML public Circle player1Color;
+  @FXML public Circle player2Color;
+  @FXML public Circle currentTurnColor;
 
   @FXML private Pane gameBoardContainer;
 
@@ -73,6 +81,11 @@ public class GameController implements Initializable {
 
     board.attachOnClickEventHandler(game);
     board.addEventHandler(GameOverEvent.GAME_OVER, event -> handleGameOver());
+    board.addEventHandler(
+        PlayerMoveEvent.PLAYER_MOVE,
+        event ->
+            updateGameState(
+                event.getNextTurn(), event.getPlayerAPieces(), event.getPlayerBPieces()));
     game.setBoard(board);
     initializePlayersState();
   }
@@ -83,6 +96,19 @@ public class GameController implements Initializable {
 
     player1Pieces.setText(Integer.toString(game.getPiecesCount(gameSettings.playerA())));
     player2Pieces.setText(Integer.toString(game.getPiecesCount(gameSettings.playerB())));
+    currentTurn.setText(player1Name.getText());
+
+    player1Color.setFill(gameSettings.playerA().color());
+    player2Color.setFill(gameSettings.playerB().color());
+    currentTurnColor.setFill(gameSettings.playerA().color());
+    log.info(
+        "Initialized player state\n player1Name={}, player2Name={}, currentTurn={}, player1Color={}, player2Color={}, currentTurnColor={}",
+        player1Name.getText(),
+        player2Name.getText(),
+        currentTurn.getText(),
+        player1Color.toString(),
+        player2Color.toString(),
+        currentTurnColor.toString());
   }
 
   public void handleGameOver() {
@@ -105,6 +131,7 @@ public class GameController implements Initializable {
   private void showGameOverDialog(Player winner) {
     Alert gameOverAlert = createGameOverAlert(winner);
     Optional<ButtonType> response = gameOverAlert.showAndWait();
+    log.trace("Showing game over dialog");
     try {
       handleDialogResponse(response.orElse(null));
     } catch (IOException ex) {
@@ -126,6 +153,7 @@ public class GameController implements Initializable {
   }
 
   private void switchToStartMenuScreen() throws IOException {
+    log.info("Switching to the start menu screen");
     FXMLLoader gameStartLoader = new FXMLLoader(getClass().getResource(GAME_START_FXML_PATH));
     Parent gameRoot = gameStartLoader.load();
 
@@ -140,7 +168,19 @@ public class GameController implements Initializable {
     stage.show();
   }
 
-  // TODO(bskok): create updateGameState method, which would repaint the board, and update state
+  public void updateGameState(Player newCurrentTurn, int piecesA, int piecesB) {
+    currentTurnColor.setFill(newCurrentTurn.color());
+    currentTurn.setText(newCurrentTurn.name());
+    player1Pieces.setText(Integer.toString(piecesA));
+    player2Pieces.setText(Integer.toString(piecesB));
+
+    log.trace(
+        "Updated player state\n currentTurn={}, player1Pieces={}, player2Pieces={}, currentTurnColor={}",
+        currentTurn.getText(),
+        player1Pieces.getText(),
+        player2Pieces.getText(),
+        currentTurnColor.toString());
+  }
 
   @FXML
   private void createNewGame() {
@@ -156,10 +196,12 @@ public class GameController implements Initializable {
     board.getPane().getChildren().clear();
     initializeGame();
     gameBoardContainer.getChildren().add(board.getPane());
+    log.info("Current game has been restarted");
   }
 
   @FXML
   private void exitGame() {
+    log.warn("Exiting the program");
     System.exit(0);
   }
 }

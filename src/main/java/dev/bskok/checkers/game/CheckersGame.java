@@ -3,11 +3,16 @@ package dev.bskok.checkers.game;
 import dev.bskok.checkers.board.Board;
 import dev.bskok.checkers.board.Move;
 import dev.bskok.checkers.events.GameOverEvent;
+import dev.bskok.checkers.events.PlayerMoveEvent;
 import dev.bskok.checkers.piece.*;
 import dev.bskok.checkers.piece.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,17 +28,12 @@ public class CheckersGame implements BoardGame {
   private final Player playerA;
   private final Player playerB;
 
-  private int playerAPieces;
-  private int playerBPieces;
-
   private Piece selectedPiece;
   private Player playerWithCurrentTurn;
 
   public CheckersGame(Player playerA, Player playerB) {
     this.playerA = playerA;
     this.playerB = playerB;
-    this.playerAPieces = 0;
-    this.playerBPieces = 0;
     this.playerWithCurrentTurn = playerA;
   }
 
@@ -102,6 +102,7 @@ public class CheckersGame implements BoardGame {
     swapPlayerTurns();
     handleCaptureMove(move);
 
+    board.fireEvent(new PlayerMoveEvent(playerWithCurrentTurn, getPiecesCount(playerA), getPiecesCount(playerB)));
     getWinner()
         .ifPresent(
             winner -> {

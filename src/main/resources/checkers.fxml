@@ -3,6 +3,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.Circle?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="dev.bskok.checkers.controller.GameController"
@@ -21,13 +22,20 @@
             <padding>
                 <Insets top="20" right="30" bottom="20" left="30"/>
             </padding>
+            <VBox spacing="10" styleClass="player-info">
+                <Circle fx:id="currentTurnColor" radius="8" />
+                <Text text="Current Turn" styleClass="player-name"/>
+                <Text fx:id="currentTurn" styleClass="player-name"/>
+            </VBox>
 
             <VBox spacing="10" styleClass="player-info">
+                <Circle fx:id="player1Color" radius="8" />
                 <Text fx:id="player1Name" styleClass="player-name"/>
                 <Text fx:id="player1Pieces" styleClass="player-score"/>
             </VBox>
 
             <VBox spacing="10" styleClass="player-info">
+                <Circle fx:id="player2Color" radius="8" />
                 <Text fx:id="player2Name" styleClass="player-name"/>
                 <Text fx:id="player2Pieces" styleClass="player-score"/>
             </VBox>
