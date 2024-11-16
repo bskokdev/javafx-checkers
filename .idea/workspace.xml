@@ -4,12 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="013d2d88-a769-4ab0-9e7c-80752e311b3b" name="Changes" comment="removed unused wrapper function">
+    <list default="true" id="013d2d88-a769-4ab0-9e7c-80752e311b3b" name="Changes" comment="implemented better game over handling with new game and restarts">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/styles/game.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/styles/start.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/CheckersApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/CheckersApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/controller/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/controller/GameStartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/controller/GameStartController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/game/CheckersGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/game/CheckersGame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/checkers.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/checkers.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/gameStart.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/gameStart.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +27,7 @@
         <option value="Interface" />
         <option value="FxmlFile" />
         <option value="Class" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -58,28 +62,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.CheckersApp.executor&quot;: &quot;Run&quot;,
-    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.checkers [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.checkers [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.checkers [validate].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.checkers [verify].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/boris/code/quarkus&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.CheckersApp.executor": "Run",
+    "Application.HelloApplication.executor": "Run",
+    "Maven.checkers [clean].executor": "Run",
+    "Maven.checkers [install].executor": "Run",
+    "Maven.checkers [validate].executor": "Run",
+    "Maven.checkers [verify].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/boris/code/quarkus",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\boris\code\checkers\src\main\resources" />
@@ -156,7 +161,11 @@
       <workItem from="1730378811131" duration="2518000" />
       <workItem from="1730960312641" duration="47000" />
       <workItem from="1731065651606" duration="198000" />
-      <workItem from="1731266654005" duration="5297000" />
+      <workItem from="1731266654005" duration="8918000" />
+      <workItem from="1731371394641" duration="36000" />
+      <workItem from="1731561734279" duration="424000" />
+      <workItem from="1731574210183" duration="3080000" />
+      <workItem from="1731759398341" duration="1092000" />
     </task>
     <task id="LOCAL-00001" summary="upload to GitHub">
       <option name="closed" value="true" />
@@ -254,7 +263,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731270359699</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="implemented better game over handling with new game and restarts">
+      <option name="closed" value="true" />
+      <created>1731272136961</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1731272136961</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -284,7 +301,8 @@
     <MESSAGE value="using more high level types instead of concrete implementations" />
     <MESSAGE value="add scene switching and more generic handling of players" />
     <MESSAGE value="removed unused wrapper function" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed unused wrapper function" />
+    <MESSAGE value="implemented better game over handling with new game and restarts" />
+    <option name="LAST_COMMIT_MESSAGE" value="implemented better game over handling with new game and restarts" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

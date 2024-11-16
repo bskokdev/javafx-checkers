@@ -1,0 +1,117 @@
+.game-container {
+    -fx-background-color: #f5f5f5;
+}
+
+.header-container {
+    -fx-padding: 15px;
+    -fx-background-color: #2c3e50;
+}
+
+.game-status {
+    -fx-font-size: 18px;
+    -fx-fill: white;
+    -fx-font-weight: bold;
+}
+
+.board-container {
+    -fx-padding: 20px;
+    -fx-alignment: center;
+}
+
+.game-board {
+    -fx-background-color: #fff;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);
+    -fx-background-radius: 5px;
+}
+
+.controls-container {
+    -fx-background-color: #2c3e50;
+    -fx-min-width: 200px;
+}
+
+.player-info {
+    -fx-background-color: rgba(255,255,255,0.1);
+    -fx-padding: 15px;
+    -fx-background-radius: 5px;
+    -fx-alignment: center;
+}
+
+.player-name {
+    -fx-font-size: 16px;
+    -fx-fill: white;
+    -fx-font-weight: bold;
+}
+
+.player-score {
+    -fx-font-size: 14px;
+    -fx-fill: #95a5a6;
+}
+
+.game-button {
+    -fx-min-width: 140px;
+    -fx-padding: 12px 20px;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.new-game-button {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: white;
+}
+
+.new-game-button:hover {
+    -fx-background-color: #27ae60;
+}
+
+.new-game-button:pressed {
+    -fx-background-color: #219a52;
+}
+
+.exit-button {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+}
+
+.exit-button:hover {
+    -fx-background-color: #c0392b;
+}
+
+.exit-button:pressed {
+    -fx-background-color: #a33024;
+}
+
+/* Checkers piece styles */
+.checker-piece {
+    -fx-stroke-width: 2;
+    -fx-stroke-type: inside;
+    -fx-stroke: rgba(0,0,0,0.3);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 2);
+}
+
+.checker-piece.king {
+    -fx-stroke: gold;
+    -fx-stroke-width: 3;
+}
+
+.checker-piece.selected {
+    -fx-effect: dropshadow(gaussian, #f1c40f, 10, 0, 0, 0);
+}
+
+/* Board square styles */
+.board-square {
+    -fx-stroke-width: 0;
+}
+
+.board-square.valid-move {
+    -fx-fill: rgba(46, 204, 113, 0.5);
+}
+
+.board-square.dark {
+    -fx-fill: #34495e;
+}
+
+.board-square.light {
+    -fx-fill: #ecf0f1;
+}

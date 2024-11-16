@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Objects;
+
 public class CheckersApp extends Application {
   private static final Logger log = LoggerFactory.getLogger(CheckersApp.class);
 
@@ -24,6 +26,8 @@ public class CheckersApp extends Application {
       startController.setStage(primaryStage);
 
       Scene scene = new Scene(root);
+      scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/start.css")).toExternalForm());
+
       primaryStage.setScene(scene);
       primaryStage.setResizable(false);
       primaryStage.setTitle("CheckersFX");

@@ -1,0 +1,64 @@
+.main-container {
+    -fx-background-color: #2c3e50;
+}
+
+.title {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-fill: #fff;
+    -fx-margin-bottom: 20px;
+}
+
+.label-header {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #fff;
+}
+
+.multiply-symbol {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #7f8c8d;
+}
+
+.input-field {
+    -fx-background-color: white;
+    -fx-background-radius: 5px;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 4px;
+    -fx-padding: 8px;
+    -fx-font-size: 13px;
+}
+
+.input-field:focused {
+    -fx-border-color: #3498db;
+    -fx-background-color: #ecf0f1;
+}
+
+.color-picker {
+    -fx-background-color: white;
+    -fx-background-radius: 5px;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 4px;
+    -fx-padding: 4px;
+    -fx-font-size: 13px;
+    -fx-min-width: 92px;
+}
+
+.start-button {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 30px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.start-button:hover {
+    -fx-background-color: #27ae60;
+}
+
+.start-button:pressed {
+    -fx-background-color: #219a52;
+}

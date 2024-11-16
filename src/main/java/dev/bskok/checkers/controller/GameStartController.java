@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import lombok.Setter;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class GameStartController {
     @FXML
@@ -98,6 +99,7 @@ public class GameStartController {
         gameController.initializeWithGameSettings(stage, settings);
 
         Scene scene = new Scene(gameRoot);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/game.css")).toExternalForm());
         stage.setScene(scene);
         stage.show();
     }

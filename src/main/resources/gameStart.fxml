@@ -1,36 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<VBox spacing="10" alignment="CENTER" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="dev.bskok.checkers.controller.GameStartController">
+<?import javafx.scene.text.Text?>
+<VBox spacing="20" minWidth="700" minHeight="500"
+      alignment="CENTER"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="dev.bskok.checkers.controller.GameStartController"
+      styleClass="main-container">
 
     <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
+        <Insets top="40" right="40" bottom="40" left="40"/>
     </padding>
 
-    <GridPane hgap="10" vgap="10">
-        <Label text="Board Size:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-        <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="0">
-            <TextField fx:id="boardSizeField" promptText="Enter size (N)" prefWidth="100"/>
-            <Label text="x"/>
-            <TextField fx:id="boardSizeField2" promptText="Enter size (N)" prefWidth="100"/>
+    <Text styleClass="title" text="CheckersFX"/>
+
+    <GridPane hgap="15" vgap="20" alignment="CENTER">
+        <columnConstraints>
+            <ColumnConstraints minWidth="100"/>
+            <ColumnConstraints minWidth="200"/>
+            <ColumnConstraints minWidth="100"/>
+        </columnConstraints>
+
+        <Label text="Board Size:" styleClass="label-header"
+               GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <HBox spacing="10" alignment="CENTER_LEFT"
+              GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <TextField fx:id="boardSizeField"
+                       promptText="Width"
+                       prefWidth="100"
+                       styleClass="input-field"/>
+            <Label text="×" styleClass="multiply-symbol"/>
+            <TextField fx:id="boardSizeField2"
+                       promptText="Height"
+                       prefWidth="100"
+                       styleClass="input-field"/>
         </HBox>
 
-        <Label text="Player 1:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-        <TextField fx:id="player1NameField" promptText="Enter name"
+        <Label text="Player 1:" styleClass="label-header"
+               GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <TextField fx:id="player1NameField"
+                   promptText="Enter player 1 name"
+                   styleClass="input-field"
                    GridPane.columnIndex="1" GridPane.rowIndex="1"/>
         <ColorPicker fx:id="player1ColorPicker"
+                     styleClass="color-picker"
                      GridPane.columnIndex="2" GridPane.rowIndex="1"/>
 
-        <Label text="Player 2:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-        <TextField fx:id="player2NameField" promptText="Enter name"
+        <Label text="Player 2:" styleClass="label-header"
+               GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <TextField fx:id="player2NameField"
+                   promptText="Enter player 2 name"
+                   styleClass="input-field"
                    GridPane.columnIndex="1" GridPane.rowIndex="2"/>
         <ColorPicker fx:id="player2ColorPicker"
+                     styleClass="color-picker"
                      GridPane.columnIndex="2" GridPane.rowIndex="2"/>
 
-        <Button text="Start Game" onAction="#handleStartGame"
-                GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+        <Button text="Start Game"
+                onAction="#handleStartGame"
+                styleClass="start-button"
+                GridPane.columnIndex="1"
+                GridPane.rowIndex="4"
+                GridPane.halignment="CENTER"/>
     </GridPane>
 </VBox>

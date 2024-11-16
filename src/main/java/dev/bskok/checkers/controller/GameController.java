@@ -9,6 +9,7 @@ import dev.bskok.checkers.game.GameSettings;
 import dev.bskok.checkers.piece.Player;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -111,6 +112,7 @@ public class GameController implements Initializable {
     gameStartController.initializeWithExistingStage(stage);
 
     Scene scene = new Scene(gameRoot);
+    scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/start.css")).toExternalForm());
     stage.setScene(scene);
     stage.show();
   }
