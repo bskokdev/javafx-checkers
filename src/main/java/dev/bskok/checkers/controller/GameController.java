@@ -8,7 +8,7 @@ import dev.bskok.checkers.game.BoardGame;
 import dev.bskok.checkers.game.CheckersGame;
 import dev.bskok.checkers.game.GameSettings;
 import dev.bskok.checkers.piece.Player;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.Objects;
 import java.util.Optional;
@@ -37,6 +37,8 @@ public class GameController implements Initializable {
   private final String GAME_CSS_PATH = "/styles/game.css";
   private final String START_CSS_PATH = "/styles/start.css";
   private final String DIALOG_CSS_PATH = "/styles/dialog.css";
+
+  private final String RESULTS_LOCATION = "data/results.csv";
 
   private static final int TILE_SIZE = 80;
 
@@ -116,7 +118,79 @@ public class GameController implements Initializable {
   }
 
   public void handleGameOver() {
-    game.getWinner().ifPresent(this::showGameOverDialog);
+    game.getWinner().ifPresent(this::onGameOverAction);
+  }
+
+  private void onGameOverAction(Player winner) {
+    writeGameResultsToCSV(RESULTS_LOCATION);
+    showGameOverDialog(winner);
+  }
+
+  private void writeGameResultsToCSV(String filename) {
+    File csvResultsFile = new File(filename);
+    log.debug("Attempting to write to file: {}", csvResultsFile.getAbsolutePath());
+
+    if (csvResultsFile.getParentFile() != null && !csvResultsFile.getParentFile().exists()) {
+      log.debug("Creating directory: {}", csvResultsFile.getParentFile().getAbsolutePath());
+      boolean dirCreated = csvResultsFile.getParentFile().mkdirs();
+      if (!dirCreated) {
+        log.error("Failed to create directory structure for {}", csvResultsFile.getAbsolutePath());
+        return;
+      }
+    }
+
+    try (FileWriter fw = new FileWriter(csvResultsFile, true);
+        BufferedWriter bw = new BufferedWriter(fw);
+        PrintWriter pw = new PrintWriter(bw)) {
+
+      // Create header if file is empty
+      if (csvResultsFile.length() == 0) {
+        pw.println("Player1;Player2;Player1Pieces;Player2Pieces");
+      }
+
+      String result =
+          String.format(
+              "%s;%s;%d;%d",
+              player1Name.getText(),
+              player2Name.getText(),
+              Integer.parseInt(player1Pieces.getText()),
+              Integer.parseInt(player2Pieces.getText()));
+
+      pw.println(result);
+      log.info("Saved a new game result to the results file - {}", result);
+    } catch (IOException e) {
+      log.error("Error writing to file {}: {}", filename, e.getMessage());
+      showFileErrorDialog();
+    }
+  }
+
+  private void showFileErrorDialog() {
+    createFileErrorAlert().showAndWait();
+  }
+
+  private Alert createFileErrorAlert() {
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setTitle("File Error");
+    alert.setHeaderText("Unable to Save Game Results");
+    alert.setContentText(
+        "There was an error saving the game results to the file. Please check if the application has write permissions.");
+
+    DialogPane dialogPane = alert.getDialogPane();
+    dialogPane
+        .getStylesheets()
+        .add(Objects.requireNonNull(getClass().getResource(DIALOG_CSS_PATH)).toExternalForm());
+    dialogPane.getStyleClass().add("alert");
+
+    ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+    alert.getButtonTypes().setAll(okButton);
+
+    alert.setOnShowing(
+        e -> {
+          Node okBtn = alert.getDialogPane().lookupButton(okButton);
+          okBtn.getStyleClass().add("ok-button");
+        });
+
+    return alert;
   }
 
   private Alert createGameOverAlert(Player winner) {

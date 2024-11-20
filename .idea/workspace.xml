@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="013d2d88-a769-4ab0-9e7c-80752e311b3b" name="Changes" comment="implemented mechanics which syncs game state with UI changes">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/styles/dialog.css" afterDir="false" />
+    <list default="true" id="013d2d88-a769-4ab0-9e7c-80752e311b3b" name="Changes" comment="Added styles for the game over dialog">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/controller/GameController.java" afterDir="false" />
     </list>
@@ -160,7 +159,8 @@
       <workItem from="1731371394641" duration="36000" />
       <workItem from="1731561734279" duration="424000" />
       <workItem from="1731574210183" duration="3080000" />
-      <workItem from="1731759398341" duration="7288000" />
+      <workItem from="1731759398341" duration="14537000" />
+      <workItem from="1731972749689" duration="14481000" />
     </task>
     <task id="LOCAL-00001" summary="upload to GitHub">
       <option name="closed" value="true" />
@@ -298,7 +298,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731767586849</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Added styles for the game over dialog">
+      <option name="closed" value="true" />
+      <created>1731768541227</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1731768541227</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -333,7 +341,8 @@
     <MESSAGE value="added player labels and piece state" />
     <MESSAGE value="removed redundant game status property" />
     <MESSAGE value="implemented mechanics which syncs game state with UI changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="implemented mechanics which syncs game state with UI changes" />
+    <MESSAGE value="Added styles for the game over dialog" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added styles for the game over dialog" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
