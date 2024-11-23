@@ -13,8 +13,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GameStartController {
+  private static final Logger log = LoggerFactory.getLogger(GameStartController.class);
 
   private final String GAME_FXML_PATH = "/checkers.fxml";
   private final String START_CSS_PATH = "/styles/start.css";
@@ -32,10 +35,13 @@ public class GameStartController {
 
   @FXML private ColorPicker player2ColorPicker;
 
+  @FXML private TextField previousResultsPathField;
+
   @Setter private Stage stage;
 
   @FXML
   public void initialize() {
+    log.debug("Initializing game start screen");
     player1ColorPicker.setValue(Color.BLUE);
     player2ColorPicker.setValue(Color.RED);
 
@@ -65,15 +71,20 @@ public class GameStartController {
   }
 
   @FXML
+  private void loadResults() {
+    log.info("Load results pressed");
+  }
+
+  @FXML
   private void handleStartGame() {
     try {
       int rows = Integer.parseInt(boardSizeField.getText());
       GameSettings gameSettings = getGameSettings(rows);
       switchToGameScene(gameSettings);
     } catch (NumberFormatException e) {
-      System.err.println("Please enter valid numbers for board size");
+      log.error("Please enter valid numbers for board size");
     } catch (IllegalArgumentException e) {
-      System.err.println(e.getMessage());
+      log.error(e.getMessage());
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -106,6 +117,7 @@ public class GameStartController {
     scene
         .getStylesheets()
         .add(Objects.requireNonNull(getClass().getResource(GAME_CSS_PATH)).toExternalForm());
+    log.debug("Created game scene ... switching to it");
     stage.setScene(scene);
     stage.show();
   }

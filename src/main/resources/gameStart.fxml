@@ -57,11 +57,21 @@
                      styleClass="color-picker"
                      GridPane.columnIndex="2" GridPane.rowIndex="2"/>
 
-        <Button text="Start Game"
-                onAction="#handleStartGame"
-                styleClass="start-button"
-                GridPane.columnIndex="1"
-                GridPane.rowIndex="4"
-                GridPane.halignment="CENTER"/>
+        <TextField fx:id="previousResultsPathField"
+                   promptText="Enter file path to load previous results"
+                   styleClass="input-field"
+                   GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+        <HBox GridPane.columnIndex="1" GridPane.rowIndex="4" spacing="20">
+            <Button text="Load Results"
+                    onAction="#loadResults"
+                    styleClass="load-button"
+
+            />
+            <Button text="Start Game"
+                    onAction="#handleStartGame"
+                    styleClass="start-button"
+            />
+        </HBox>
     </GridPane>
 </VBox>

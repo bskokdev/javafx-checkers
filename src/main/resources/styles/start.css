@@ -45,6 +45,24 @@
     -fx-min-width: 92px;
 }
 
+.load-button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 30px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.load-button:hover {
+    -fx-background-color: #0378c7;
+}
+
+.load-button:pressed {
+    -fx-background-color: #0098ff;
+}
+
 .start-button {
     -fx-background-color: #2ecc71;
     -fx-text-fill: white;
