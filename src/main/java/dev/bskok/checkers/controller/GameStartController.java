@@ -1,16 +1,22 @@
 package dev.bskok.checkers.controller;
 
+import dev.bskok.checkers.game.GameResult;
 import dev.bskok.checkers.game.GameSettings;
 import dev.bskok.checkers.piece.Player;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -22,6 +28,10 @@ public class GameStartController {
   private final String GAME_FXML_PATH = "/checkers.fxml";
   private final String START_CSS_PATH = "/styles/start.css";
   private final String GAME_CSS_PATH = "/styles/game.css";
+
+  @FXML private TableView resultsTableView;
+
+  @FXML private Label loadedFile;
 
   @FXML private TextField boardSizeField;
 
@@ -39,9 +49,22 @@ public class GameStartController {
 
   @Setter private Stage stage;
 
+  private FileChooser previousResultsLoader;
+
   @FXML
   public void initialize() {
     log.debug("Initializing game start screen");
+    initializePlayerInputs();
+    initializeResultsTableHeaders();
+    initializeFileLoaders();
+  }
+
+  public void initializeWithExistingStage(Stage stage) {
+    this.stage = stage;
+    initialize();
+  }
+
+  private void initializePlayerInputs() {
     player1ColorPicker.setValue(Color.BLUE);
     player2ColorPicker.setValue(Color.RED);
 
@@ -65,14 +88,91 @@ public class GameStartController {
             });
   }
 
-  public void initializeWithExistingStage(Stage stage) {
-    this.stage = stage;
-    initialize();
+  private void initializeFileLoaders() {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Select a file with previous results");
+    fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+
+    FileChooser.ExtensionFilter csvFilter = new FileChooser.ExtensionFilter("CSV files", "*.csv");
+    fileChooser.getExtensionFilters().add(csvFilter);
+    previousResultsLoader = fileChooser;
   }
 
   @FXML
-  private void loadResults() {
+  private void handlePreviousResultsLoad() {
     log.info("Load results pressed");
+    File previousResultsFile = getFileFromFileLoader();
+    if (previousResultsFile != null) {
+      log.info("Loaded file: {}", previousResultsFile.getPath());
+      loadedFile.setText("Loaded results from: " + previousResultsFile.getPath());
+      List<GameResult> gameResults = readDataFromCSV(previousResultsFile);
+      populateResultsTableView(gameResults);
+    }
+  }
+
+  private void populateResultsTableView(List<GameResult> gameResults) {
+    resultsTableView.getItems().clear();
+    initializeResultsTableHeaders();
+    resultsTableView.getItems().addAll(gameResults);
+  }
+
+  private void initializeResultsTableHeaders() {
+    if (!resultsTableView.getColumns().isEmpty()) {
+      return;
+    }
+
+    TableColumn<GameResult, String> player1Col = new TableColumn<>("Player 1");
+    player1Col.setCellValueFactory(
+        cellData -> new SimpleStringProperty(cellData.getValue().player1Name()));
+
+    TableColumn<GameResult, String> player2Col = new TableColumn<>("Player 2");
+    player2Col.setCellValueFactory(
+        cellData -> new SimpleStringProperty(cellData.getValue().player2Name()));
+
+    TableColumn<GameResult, Number> player1PiecesCol = new TableColumn<>("Player 1 Pieces");
+    player1PiecesCol.setCellValueFactory(
+        cellData -> new SimpleIntegerProperty(cellData.getValue().player1Pieces()));
+
+    TableColumn<GameResult, Number> player2PiecesCol = new TableColumn<>("Player 2 Pieces");
+    player2PiecesCol.setCellValueFactory(
+        cellData -> new SimpleIntegerProperty(cellData.getValue().player2Pieces()));
+
+    // Make columns equal width
+    player1Col.prefWidthProperty().bind(resultsTableView.widthProperty().divide(4));
+    player2Col.prefWidthProperty().bind(resultsTableView.widthProperty().divide(4));
+    player1PiecesCol.prefWidthProperty().bind(resultsTableView.widthProperty().divide(4));
+    player2PiecesCol.prefWidthProperty().bind(resultsTableView.widthProperty().divide(4));
+
+    resultsTableView
+        .getColumns()
+        .addAll(player1Col, player2Col, player1PiecesCol, player2PiecesCol);
+  }
+
+  private List<GameResult> readDataFromCSV(File file) {
+    List<GameResult> results = new ArrayList<>();
+    try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+      String line = br.readLine(); // skip header
+      while ((line = br.readLine()) != null) {
+        String[] values = line.split(";");
+        if (values.length != 4) {
+          continue;
+        }
+
+        GameResult result =
+            new GameResult(
+                values[0], values[1], Integer.parseInt(values[2]), Integer.parseInt(values[3]));
+        results.add(result);
+      }
+      return results;
+
+    } catch (IOException e) {
+      log.error("Error reading CSV file: {}", e.getMessage());
+    }
+    return Collections.emptyList();
+  }
+
+  private File getFileFromFileLoader() {
+    return previousResultsLoader.showOpenDialog(stage);
   }
 
   @FXML

@@ -6,6 +6,7 @@ import dev.bskok.checkers.events.GameOverEvent;
 import dev.bskok.checkers.events.PlayerMoveEvent;
 import dev.bskok.checkers.game.BoardGame;
 import dev.bskok.checkers.game.CheckersGame;
+import dev.bskok.checkers.game.GameResult;
 import dev.bskok.checkers.game.GameSettings;
 import dev.bskok.checkers.piece.Player;
 import java.io.*;
@@ -122,12 +123,19 @@ public class GameController implements Initializable {
   }
 
   private void onGameOverAction(Player winner) {
-    writeGameResultsToCSV(RESULTS_LOCATION);
+    GameResult result =
+        new GameResult(
+            player1Name.getText(),
+            player2Name.getText(),
+            Integer.parseInt(player1Pieces.getText()),
+            Integer.parseInt(player2Pieces.getText()));
+
+    writeGameResultAsCSV(result);
     showGameOverDialog(winner);
   }
 
-  private void writeGameResultsToCSV(String filename) {
-    File csvResultsFile = new File(filename);
+  private void writeGameResultAsCSV(GameResult result) {
+    File csvResultsFile = new File(RESULTS_LOCATION);
     log.debug("Attempting to write to file: {}", csvResultsFile.getAbsolutePath());
 
     if (csvResultsFile.getParentFile() != null && !csvResultsFile.getParentFile().exists()) {
@@ -145,21 +153,13 @@ public class GameController implements Initializable {
 
       // Create header if file is empty
       if (csvResultsFile.length() == 0) {
-        pw.println("Player1;Player2;Player1Pieces;Player2Pieces");
+        pw.println(result.getHeader());
       }
 
-      String result =
-          String.format(
-              "%s;%s;%d;%d",
-              player1Name.getText(),
-              player2Name.getText(),
-              Integer.parseInt(player1Pieces.getText()),
-              Integer.parseInt(player2Pieces.getText()));
-
-      pw.println(result);
+      pw.println(result.asCSVRow());
       log.info("Saved a new game result to the results file - {}", result);
     } catch (IOException e) {
-      log.error("Error writing to file {}: {}", filename, e.getMessage());
+      log.error("Error writing to file {}: {}", "data/results.csv", e.getMessage());
       showFileErrorDialog();
     }
   }

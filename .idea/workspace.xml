@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="013d2d88-a769-4ab0-9e7c-80752e311b3b" name="Changes" comment="Implemented saving game results to a file">
+    <list default="true" id="013d2d88-a769-4ab0-9e7c-80752e311b3b" name="Changes" comment="added load button without functionality">
+      <change afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/game/GameResult.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/controller/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/controller/GameStartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/controller/GameStartController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/gameStart.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/gameStart.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/styles/start.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/styles/start.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,12 +19,12 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Record" />
         <option value="Enum" />
         <option value="Interface" />
         <option value="FxmlFile" />
         <option value="CSS File" />
         <option value="Class" />
+        <option value="Record" />
       </list>
     </option>
   </component>
@@ -164,7 +165,7 @@
       <workItem from="1731759398341" duration="14537000" />
       <workItem from="1731972749689" duration="17539000" />
       <workItem from="1732288137855" duration="4485000" />
-      <workItem from="1732366345390" duration="3096000" />
+      <workItem from="1732366345390" duration="9047000" />
     </task>
     <task id="LOCAL-00001" summary="upload to GitHub">
       <option name="closed" value="true" />
@@ -318,7 +319,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732138798380</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="added load button without functionality">
+      <option name="closed" value="true" />
+      <created>1732374878945</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1732374878945</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -355,7 +364,8 @@
     <MESSAGE value="implemented mechanics which syncs game state with UI changes" />
     <MESSAGE value="Added styles for the game over dialog" />
     <MESSAGE value="Implemented saving game results to a file" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented saving game results to a file" />
+    <MESSAGE value="added load button without functionality" />
+    <option name="LAST_COMMIT_MESSAGE" value="added load button without functionality" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

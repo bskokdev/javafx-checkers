@@ -3,18 +3,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
-<VBox spacing="20" minWidth="700" minHeight="500"
+<VBox spacing="20" minWidth="800" minHeight="600"
       alignment="CENTER"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="dev.bskok.checkers.controller.GameStartController"
       styleClass="main-container">
-
     <padding>
         <Insets top="40" right="40" bottom="40" left="40"/>
     </padding>
 
     <Text styleClass="title" text="CheckersFX"/>
 
+    <!-- Game Setup Section -->
     <GridPane hgap="15" vgap="20" alignment="CENTER">
         <columnConstraints>
             <ColumnConstraints minWidth="100"/>
@@ -22,6 +22,7 @@
             <ColumnConstraints minWidth="100"/>
         </columnConstraints>
 
+        <!-- Board Size Row -->
         <Label text="Board Size:" styleClass="label-header"
                GridPane.columnIndex="0" GridPane.rowIndex="0"/>
         <HBox spacing="10" alignment="CENTER_LEFT"
@@ -37,6 +38,7 @@
                        styleClass="input-field"/>
         </HBox>
 
+        <!-- Player 1 Row -->
         <Label text="Player 1:" styleClass="label-header"
                GridPane.columnIndex="0" GridPane.rowIndex="1"/>
         <TextField fx:id="player1NameField"
@@ -47,6 +49,7 @@
                      styleClass="color-picker"
                      GridPane.columnIndex="2" GridPane.rowIndex="1"/>
 
+        <!-- Player 2 Row -->
         <Label text="Player 2:" styleClass="label-header"
                GridPane.columnIndex="0" GridPane.rowIndex="2"/>
         <TextField fx:id="player2NameField"
@@ -56,22 +59,30 @@
         <ColorPicker fx:id="player2ColorPicker"
                      styleClass="color-picker"
                      GridPane.columnIndex="2" GridPane.rowIndex="2"/>
-
-        <TextField fx:id="previousResultsPathField"
-                   promptText="Enter file path to load previous results"
-                   styleClass="input-field"
-                   GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-
-        <HBox GridPane.columnIndex="1" GridPane.rowIndex="4" spacing="20">
-            <Button text="Load Results"
-                    onAction="#loadResults"
-                    styleClass="load-button"
-
-            />
-            <Button text="Start Game"
-                    onAction="#handleStartGame"
-                    styleClass="start-button"
-            />
-        </HBox>
     </GridPane>
+
+    <!-- Button Section -->
+    <HBox spacing="20" alignment="CENTER">
+        <Button text="Load Results"
+                onAction="#handlePreviousResultsLoad"
+                styleClass="load-button"/>
+        <Button text="Start Game"
+                onAction="#handleStartGame"
+                styleClass="start-button"/>
+    </HBox>
+
+    <!-- Results Section -->
+    <VBox spacing="10" VBox.vgrow="ALWAYS">
+        <Label fx:id="loadedFile"
+               styleClass="label-header"
+               wrapText="true"
+               maxWidth="600"/>
+        <TableView fx:id="resultsTableView"
+                   VBox.vgrow="ALWAYS"
+                   minHeight="200">
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+            </columnResizePolicy>
+        </TableView>
+    </VBox>
 </VBox>
