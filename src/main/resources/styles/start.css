@@ -80,3 +80,95 @@
 .start-button:pressed {
     -fx-background-color: #219a52;
 }
+
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: #34495e;
+    -fx-border-radius: 5px;
+    -fx-padding: 0;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #34495e;
+    -fx-background-radius: 5px 5px 0 0;
+    -fx-padding: 5px;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: transparent;
+    -fx-size: 40px;
+    -fx-border-width: 0 0 0 0;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-alignment: center-left;
+}
+
+.table-view .table-cell {
+    -fx-text-fill: white;
+    -fx-alignment: center-left;
+    -fx-padding: 8px;
+    -fx-font-size: 13px;
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: #2c3e50;
+    -fx-border-color: #34495e;
+    -fx-table-cell-border-color: #34495e;
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: #263544;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #3498db;
+}
+
+.table-view .scroll-bar:vertical {
+    -fx-background-color: #2c3e50;
+}
+
+.table-view .scroll-bar:vertical .thumb {
+    -fx-background-color: #34495e;
+}
+
+.table-view .scroll-bar:vertical .increment-button,
+.table-view .scroll-bar:vertical .decrement-button {
+    -fx-background-color: #2c3e50;
+}
+
+.table-view .scroll-bar:vertical .increment-arrow,
+.table-view .scroll-bar:vertical .decrement-arrow {
+    -fx-background-color: #ecf0f1;
+}
+
+/* Empty table placeholder text */
+.table-view .placeholder .label {
+    -fx-text-fill: #7f8c8d;
+    -fx-font-size: 14px;
+}
+
+/* Column resize line */
+.table-view .column-resize-line {
+    -fx-background-color: #3498db;
+    -fx-pref-width: 1px;
+}
+
+/* Sort arrows */
+.table-view .column-header .sort-order-dot {
+    -fx-background-color: white;
+}
+
+.table-view .column-header .arrow {
+    -fx-background-color: white;
+}
+
+/* When no content */
+.table-view:focused {
+    -fx-background-color: transparent;
+    -fx-border-color: #3498db;
+}
