@@ -45,8 +45,6 @@ public class GameStartController {
 
   @FXML private ColorPicker player2ColorPicker;
 
-  @FXML private TextField previousResultsPathField;
-
   @Setter private Stage stage;
 
   private FileChooser previousResultsLoader;
@@ -101,6 +99,7 @@ public class GameStartController {
   @FXML
   private void handlePreviousResultsLoad() {
     log.info("Load results pressed");
+    // TODO(bskok): I should check if there is already a CSV file present in data dir or loaded
     File previousResultsFile = getFileFromFileLoader();
     if (previousResultsFile != null) {
       log.info("Loaded file: {}", previousResultsFile.getPath());
