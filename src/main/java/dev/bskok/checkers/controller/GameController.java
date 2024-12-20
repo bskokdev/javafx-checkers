@@ -153,10 +153,10 @@ public class GameController implements Initializable {
 
       // Create header if file is empty
       if (csvResultsFile.length() == 0) {
-        pw.println(result.getHeader());
+        pw.println(result.getCsvHeader());
       }
 
-      pw.println(result.asCSVRow());
+      pw.println(result.getCsvDataRow());
       log.info("Saved a new game result to the results file - {}", result);
     } catch (IOException e) {
       log.error("Error writing to file {}: {}", "data/results.csv", e.getMessage());

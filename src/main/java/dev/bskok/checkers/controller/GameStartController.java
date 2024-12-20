@@ -55,6 +55,7 @@ public class GameStartController {
     initializePlayerInputs();
     initializeResultsTableHeaders();
     initializeFileLoaders();
+    initializePreviousScoreIfPresent();
   }
 
   public void initializeWithExistingStage(Stage stage) {
@@ -96,15 +97,24 @@ public class GameStartController {
     previousResultsLoader = fileChooser;
   }
 
+  private void initializePreviousScoreIfPresent() {
+    boolean isResultFilePresent = new File("data", "results.csv").exists();
+    if (isResultFilePresent) {
+      log.debug("Results data file already present in the \"data\\results.csv\", populating table view with scores");
+      File previousResults = new File("data/results.csv");
+      loadedFile.setText("Loaded results from: " + previousResults.getPath());
+      populateResultsTableView(readDataFromCSV(previousResults));
+    }
+  }
+
   @FXML
   private void handlePreviousResultsLoad() {
     log.info("Load results pressed");
-    // TODO(bskok): I should check if there is already a CSV file present in data dir or loaded
-    File previousResultsFile = getFileFromFileLoader();
-    if (previousResultsFile != null) {
-      log.info("Loaded file: {}", previousResultsFile.getPath());
-      loadedFile.setText("Loaded results from: " + previousResultsFile.getPath());
-      List<GameResult> gameResults = readDataFromCSV(previousResultsFile);
+    File resultsDataFile = getFileFromFileLoader();
+    if (resultsDataFile != null) {
+      log.info("Loaded file: {}", resultsDataFile.getPath());
+      loadedFile.setText("Loaded results from: " + resultsDataFile.getPath());
+      List<GameResult> gameResults = readDataFromCSV(resultsDataFile);
       populateResultsTableView(gameResults);
     }
   }
