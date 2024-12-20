@@ -16,8 +16,6 @@ public class CheckersApp extends Application {
 
   @Override
   public void start(Stage primaryStage) {
-    // TODO(bskok): add reading and writing from/to a file - save result after game ends
-    // TODO(bskok): there should also be a table with number of moves per game on the right
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/gameStart.fxml"));
       Parent root = loader.load();

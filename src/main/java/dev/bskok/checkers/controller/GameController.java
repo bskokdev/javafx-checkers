@@ -292,6 +292,8 @@ public class GameController implements Initializable {
     board.getPane().getChildren().clear();
     initializeGame();
     gameBoardContainer.getChildren().add(board.getPane());
+    player1Pieces.setText(Integer.toString(0));
+    player2Pieces.setText(Integer.toString(0));
     log.info("Current game has been restarted");
   }
 
