@@ -9,6 +9,7 @@ import dev.bskok.checkers.piece.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
 import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.Setter;
@@ -143,24 +144,25 @@ public class CheckersGame implements BoardGame {
   }
 
   private boolean doesPlayerHavePiecesLeft(Player player) {
-    int rows = board.getRows();
-    int cols = board.getCols();
     Color playerColor = player.color();
 
-    for (int row = 0; row < rows; row++) {
-      for (int col = 0; col < cols; col++) {
-        if (board
-            .getPieceAt(row, col)
-            .map(piece -> (Piece) piece)
-            .filter(piece -> piece.getColor() == playerColor)
-            .isPresent()) {
-          log.trace("{} has pieces on the board", ColorConverter.getColorName(playerColor));
-          return true;
-        }
-      }
+    boolean hasPieces =
+        IntStream.range(0, board.getRows())
+            .boxed()
+            .flatMap(
+                row ->
+                    IntStream.range(0, board.getCols()).mapToObj(col -> board.getPieceAt(row, col)))
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .anyMatch(piece -> piece.getColor() == playerColor);
+
+    if (hasPieces) {
+      log.trace("{} has pieces on the board", ColorConverter.getColorName(playerColor));
+    } else {
+      log.debug("No pieces left for {}", ColorConverter.getColorName(playerColor));
     }
-    log.debug("No pieces left for {}", ColorConverter.getColorName(playerColor));
-    return false;
+
+    return hasPieces;
   }
 
   private boolean isMoveValid(Move move) {
