@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="013d2d88-a769-4ab0-9e7c-80752e311b3b" name="Changes" comment="replaced nested for loops with streams to check if there are pieces left for a color">
+    <list default="true" id="013d2d88-a769-4ab0-9e7c-80752e311b3b" name="Changes" comment="Added javadocs to the interfaces">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/board/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/board/Board.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,7 +166,7 @@
       <workItem from="1734636131230" duration="2268000" />
       <workItem from="1734725109510" duration="8000" />
       <workItem from="1734735775068" duration="4933000" />
-      <workItem from="1734779720661" duration="2566000" />
+      <workItem from="1734779720661" duration="4445000" />
     </task>
     <task id="LOCAL-00001" summary="upload to GitHub">
       <option name="closed" value="true" />
@@ -377,7 +376,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734740651417</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Added javadocs to the interfaces">
+      <option name="closed" value="true" />
+      <created>1734788972283</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1734788972283</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -395,7 +402,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added git remote" />
     <MESSAGE value="cleaned up overcomplicated stuff" />
     <MESSAGE value="refactor into functional and more extensible manner" />
     <MESSAGE value="cleaned up comments" />
@@ -420,7 +426,8 @@
     <MESSAGE value="Removed redundant enum" />
     <MESSAGE value="Formatted code and optimized imports" />
     <MESSAGE value="replaced nested for loops with streams to check if there are pieces left for a color" />
-    <option name="LAST_COMMIT_MESSAGE" value="replaced nested for loops with streams to check if there are pieces left for a color" />
+    <MESSAGE value="Added javadocs to the interfaces" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added javadocs to the interfaces" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
