@@ -26,16 +26,8 @@ public class CheckersPiece extends Piece implements Promotable {
   public void promoteTo(PieceType promotedType) {
     log.info("Piece at [{}, {}] has been promoted to: {}", row, col, promotedType);
     this.pieceType = promotedType;
-    switch (promotedType) {
-      case KING -> {
-        setStroke(Color.GOLD);
-        setStrokeWidth(3);
-      }
-      case NORMAL -> {
-        setStroke(Color.DARKGRAY);
-        setStrokeWidth(1);
-      }
-    }
+    setStroke(promotedType.stroke);
+    setStrokeWidth(promotedType.strokeWidth);
   }
 
   public boolean isKing() {

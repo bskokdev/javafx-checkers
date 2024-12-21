@@ -5,8 +5,9 @@ module dev.bskok.checkers {
   requires ch.qos.logback.classic;
   requires org.slf4j;
   requires ch.qos.logback.core;
+    requires java.desktop;
 
-  opens dev.bskok.checkers to
+    opens dev.bskok.checkers to
       javafx.fxml;
 
   exports dev.bskok.checkers;

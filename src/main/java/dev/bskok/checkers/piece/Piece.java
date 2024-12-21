@@ -6,8 +6,6 @@ import lombok.Getter;
 
 @Getter
 public class Piece extends Circle implements Colorable, Selectable {
-  private boolean isSelected;
-
   protected int row;
   protected int col;
 
@@ -16,7 +14,6 @@ public class Piece extends Circle implements Colorable, Selectable {
 
   public Piece(Color color, double radius) {
     super(radius);
-    this.isSelected = false;
     this.color = color;
     this.pieceType = PieceType.NORMAL;
     setFill(color);
@@ -30,11 +27,25 @@ public class Piece extends Circle implements Colorable, Selectable {
 
   @Override
   public void select() {
-    this.isSelected = true;
+    if (isCheckersKing()) {
+      setStrokeWidth(getPieceType().strokeWidth + 5);
+      return;
+    }
+    setStroke(Color.GREEN);
+    setStrokeWidth(3);
   }
 
   @Override
   public void deselect() {
-    this.isSelected = false;
+    if (isCheckersKing()) {
+      setStrokeWidth(getPieceType().strokeWidth);
+      return;
+    }
+    setStroke(null);
+    setStrokeWidth(0);
+  }
+
+  protected boolean isCheckersKing() {
+    return this instanceof CheckersPiece checkersPiece && checkersPiece.isKing();
   }
 }

@@ -10,16 +10,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// TODO(bskok): add unit tests for the core game logic
 public class CheckersGame implements BoardGame {
   public static final Logger log = LoggerFactory.getLogger(CheckersGame.class);
 
@@ -102,7 +98,9 @@ public class CheckersGame implements BoardGame {
     swapPlayerTurns();
     handleCaptureMove(move);
 
-    board.fireEvent(new PlayerMoveEvent(playerWithCurrentTurn, getPiecesCount(playerA), getPiecesCount(playerB)));
+    board.fireEvent(
+        new PlayerMoveEvent(
+            playerWithCurrentTurn, getPiecesCount(playerA), getPiecesCount(playerB)));
     getWinner()
         .ifPresent(
             winner -> {
@@ -206,14 +204,11 @@ public class CheckersGame implements BoardGame {
       return false;
     }
 
-    log.trace(
-        "row diff: {}, col diff: {}",
-        Math.abs(move.fromRow() - move.toRow()),
-        Math.abs(move.fromCol() - move.toCol()));
+    int rowDiff = Math.abs(move.fromRow() - move.toRow());
+    int colDiff = Math.abs(move.fromCol() - move.toCol());
+    log.trace("row diff: {}, col diff: {}", rowDiff, colDiff);
 
-    return (Math.abs(move.fromRow() - move.toRow()) == 1
-            && Math.abs(move.fromCol() - move.toCol()) == 1)
-        || isCaptureDuringMove(move);
+    return (rowDiff == 1 && colDiff == 1) || isCaptureDuringMove(move);
   }
 
   private void handleCaptureMove(Move move) {
