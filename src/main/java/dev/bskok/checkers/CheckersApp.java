@@ -1,6 +1,7 @@
 package dev.bskok.checkers;
 
 import dev.bskok.checkers.controller.GameStartController;
+import java.util.Objects;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,10 +10,12 @@ import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Objects;
-
 public class CheckersApp extends Application {
   private static final Logger log = LoggerFactory.getLogger(CheckersApp.class);
+
+  public static void main(String[] args) {
+    launch();
+  }
 
   @Override
   public void start(Stage primaryStage) {
@@ -24,7 +27,10 @@ public class CheckersApp extends Application {
       startController.setStage(primaryStage);
 
       Scene scene = new Scene(root);
-      scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/start.css")).toExternalForm());
+      scene
+          .getStylesheets()
+          .add(
+              Objects.requireNonNull(getClass().getResource("/styles/start.css")).toExternalForm());
 
       primaryStage.setScene(scene);
       primaryStage.setResizable(false);
@@ -35,9 +41,5 @@ public class CheckersApp extends Application {
     } catch (Exception e) {
       log.error("An error occurred during application start: {}", e.getMessage(), e);
     }
-  }
-
-  public static void main(String[] args) {
-    launch();
   }
 }

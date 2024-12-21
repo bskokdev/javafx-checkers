@@ -100,7 +100,8 @@ public class GameStartController {
   private void initializePreviousScoreIfPresent() {
     boolean isResultFilePresent = new File("data", "results.csv").exists();
     if (isResultFilePresent) {
-      log.debug("Results data file already present in the \"data\\results.csv\", populating table view with scores");
+      log.debug(
+          "Results data file already present in the \"data\\results.csv\", populating table view with scores");
       File previousResults = new File("data/results.csv");
       loadedFile.setText("Loaded results from: " + previousResults.getPath());
       populateResultsTableView(readDataFromCSV(previousResults));

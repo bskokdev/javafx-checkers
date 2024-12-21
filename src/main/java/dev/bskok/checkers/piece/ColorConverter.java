@@ -1,10 +1,9 @@
 package dev.bskok.checkers.piece;
 
+import java.lang.reflect.Field;
 import javafx.scene.paint.Color;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.lang.reflect.Field;
 
 public class ColorConverter {
   public static final Logger log = LoggerFactory.getLogger(ColorConverter.class);

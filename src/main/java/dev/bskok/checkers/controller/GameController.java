@@ -33,16 +33,12 @@ import org.slf4j.LoggerFactory;
 
 public class GameController implements Initializable {
   private static final Logger log = LoggerFactory.getLogger(GameController.class);
-
+  private static final int TILE_SIZE = 80;
   private final String GAME_START_FXML_PATH = "/gameStart.fxml";
   private final String GAME_CSS_PATH = "/styles/game.css";
   private final String START_CSS_PATH = "/styles/start.css";
   private final String DIALOG_CSS_PATH = "/styles/dialog.css";
-
   private final String RESULTS_LOCATION = "data/results.csv";
-
-  private static final int TILE_SIZE = 80;
-
   @FXML public Text player1Name;
   @FXML public Text player2Name;
 

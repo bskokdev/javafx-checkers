@@ -9,7 +9,6 @@ import dev.bskok.checkers.piece.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-
 import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,12 +17,9 @@ import org.slf4j.LoggerFactory;
 
 public class CheckersGame implements BoardGame {
   public static final Logger log = LoggerFactory.getLogger(CheckersGame.class);
-
-  @Getter @Setter private Board board;
-
   private final Player playerA;
   private final Player playerB;
-
+  @Getter @Setter private Board board;
   private Piece selectedPiece;
   private Player playerWithCurrentTurn;
 

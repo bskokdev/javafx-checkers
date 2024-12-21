@@ -1,15 +1,14 @@
 package dev.bskok.checkers.piece;
 
-import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import lombok.Getter;
 
 @Getter
 public class Piece extends Circle implements Colorable, Selectable {
+  protected final Color color;
   protected int row;
   protected int col;
-
-  protected final Color color;
   protected PieceType pieceType;
 
   public Piece(Color color, double radius) {

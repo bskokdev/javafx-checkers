@@ -2,7 +2,6 @@ package dev.bskok.checkers.game;
 
 import dev.bskok.checkers.board.Board;
 import dev.bskok.checkers.piece.Player;
-
 import java.util.Optional;
 
 public interface BoardGame {
