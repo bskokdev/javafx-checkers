@@ -188,8 +188,7 @@ public class GameStartController {
   @FXML
   private void handleStartGame() {
     try {
-      int rows = Integer.parseInt(boardSizeField.getText());
-      GameSettings gameSettings = getGameSettings(rows);
+      GameSettings gameSettings = getGameSettings();
       switchToGameScene(gameSettings);
     } catch (NumberFormatException e) {
       log.error("Please enter valid numbers for board size");
@@ -200,7 +199,8 @@ public class GameStartController {
     }
   }
 
-  private GameSettings getGameSettings(int rows) throws IllegalArgumentException {
+  private GameSettings getGameSettings() throws IllegalArgumentException {
+    int rows = Integer.parseInt(boardSizeField.getText());
     int cols = Integer.parseInt(boardSizeField2.getText());
     Player playerA = new Player(player1NameField.getText(), player1ColorPicker.getValue(), true);
     Player playerB = new Player(player2NameField.getText(), player2ColorPicker.getValue(), false);
