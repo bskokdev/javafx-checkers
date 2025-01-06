@@ -82,7 +82,7 @@ public class GameController implements Initializable {
             .attachEventHandlers(game)
             .build();
 
-    board.attachOnClickEventHandler(game);
+    // TODO(bskok): below events could be moved to the "attachEventHandlers" method in the builder
     board.addEventHandler(GameOverEvent.GAME_OVER, event -> handleGameOver());
     board.addEventHandler(
         PlayerMoveEvent.PLAYER_MOVE,

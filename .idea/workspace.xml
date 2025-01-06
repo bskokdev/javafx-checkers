@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="013d2d88-a769-4ab0-9e7c-80752e311b3b" name="Changes" comment="Added javadocs to the interfaces">
+    <list default="true" id="013d2d88-a769-4ab0-9e7c-80752e311b3b" name="Changes" comment="updated game settings fetching">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/controller/GameController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,6 +171,7 @@
       <workItem from="1734888590746" duration="2113000" />
       <workItem from="1734903797235" duration="32000" />
       <workItem from="1736090458885" duration="390000" />
+      <workItem from="1736160000135" duration="1019000" />
     </task>
     <task id="LOCAL-00001" summary="upload to GitHub">
       <option name="closed" value="true" />
@@ -395,7 +397,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734791878496</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="updated game settings fetching">
+      <option name="closed" value="true" />
+      <created>1736160481868</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1736160481868</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -413,7 +423,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="cleaned up overcomplicated stuff" />
     <MESSAGE value="refactor into functional and more extensible manner" />
     <MESSAGE value="cleaned up comments" />
     <MESSAGE value="bigger tile size" />
@@ -438,7 +447,8 @@
     <MESSAGE value="Formatted code and optimized imports" />
     <MESSAGE value="replaced nested for loops with streams to check if there are pieces left for a color" />
     <MESSAGE value="Added javadocs to the interfaces" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added javadocs to the interfaces" />
+    <MESSAGE value="updated game settings fetching" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated game settings fetching" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
