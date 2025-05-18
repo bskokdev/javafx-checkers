@@ -4,8 +4,11 @@ module dev.bskok.checkers {
   requires static lombok;
   requires ch.qos.logback.classic;
   requires org.slf4j;
+  exports dev.bskok.checkers.server.dto;
   requires ch.qos.logback.core;
-    requires java.desktop;
+    requires java.net.http;
+  requires com.fasterxml.jackson.datatype.jsr310;
+    requires com.fasterxml.jackson.databind;
 
     opens dev.bskok.checkers to
       javafx.fxml;

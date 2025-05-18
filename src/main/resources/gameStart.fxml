@@ -63,7 +63,7 @@
 
     <!-- Button Section -->
     <HBox spacing="20" alignment="CENTER">
-        <Button text="Load Results"
+        <Button text="Load Results From File"
                 onAction="#handlePreviousResultsLoad"
                 styleClass="load-button"/>
         <Button text="Start Game"

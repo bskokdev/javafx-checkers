@@ -14,6 +14,9 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import dev.bskok.checkers.server.client.GameRestClient;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -59,16 +62,35 @@ public class GameController implements Initializable {
 
   private Stage stage;
 
+  private final GameRestClient restClient = new GameRestClient();
+  private Long currentGameId;
+  private Long player1Id;
+  private Long player2Id;
+
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     // deferred till the settings are received in the method below
   }
 
-  public void initializeWithGameSettings(Stage stage, GameSettings gameSettings) {
+  void initializeWithGameSettings(Stage stage, GameSettings gameSettings) {
     this.stage = stage;
     this.gameSettings = gameSettings;
-    initializeGame();
-    gameBoardContainer.getChildren().add(board.getPane());
+
+    restClient.createGame(gameSettings.playerA(), gameSettings.playerB())
+            .thenAccept(response -> {
+              this.player1Id = response.getPlayer1Id();
+              this.player2Id = response.getPlayer2Id();
+              this.currentGameId = response.getGame().getId();
+
+              Platform.runLater(() -> {
+                initializeGame();
+                gameBoardContainer.getChildren().add(board.getPane());
+              });
+            })
+            .exceptionally(ex -> {
+              Platform.runLater(() -> showErrorDialog("Game Creation Failed", ex));
+              return null;
+            });
   }
 
   private void initializeGame() {
@@ -91,6 +113,15 @@ public class GameController implements Initializable {
                 event.getNextTurn(), event.getPlayerAPieces(), event.getPlayerBPieces()));
     game.setBoard(board);
     initializePlayersState();
+  }
+
+  private void showErrorDialog(String title, Throwable ex) {
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setTitle("Network Error");
+    alert.setHeaderText(title);
+    alert.setContentText(ex.getMessage());
+
+    alert.showAndWait();
   }
 
   private void initializePlayersState() {
@@ -119,15 +150,40 @@ public class GameController implements Initializable {
   }
 
   private void onGameOverAction(Player winner) {
-    GameResult result =
-        new GameResult(
-            player1Name.getText(),
-            player2Name.getText(),
-            Integer.parseInt(player1Pieces.getText()),
-            Integer.parseInt(player2Pieces.getText()));
+    Player loser = winner == gameSettings.playerA() ? gameSettings.playerB() : gameSettings.playerB();
+    int winnerPieces = game.getPiecesCount(winner);
+    int loserPieces = game.getPiecesCount(loser);
 
-    writeGameResultAsCSV(result);
-    showGameOverDialog(winner);
+    Long winnerId = winner == gameSettings.playerA() ? player1Id : player2Id;
+    Long loserId = loser == gameSettings.playerA() ? player1Id : player2Id;
+
+    GameResult localResult = new GameResult(
+            gameSettings.playerA().name(),
+            gameSettings.playerB().name(),
+            game.getPiecesCount(gameSettings.playerA()),
+            game.getPiecesCount(gameSettings.playerB())
+    );
+
+    restClient.updateGameResult(
+                    currentGameId,
+                    winner,
+                    winnerPieces,
+                    winnerId,
+                    loser,
+                    loserPieces,
+                    loserId)
+            .thenAccept(gameDto -> Platform.runLater(() -> {
+              writeGameResultAsCSV(localResult);
+              showGameOverDialog(winner);
+            }))
+            .exceptionally(ex -> {
+              Platform.runLater(() -> {
+                writeGameResultAsCSV(localResult);
+                showErrorDialog("Server Save Failed", ex);
+                showGameOverDialog(winner);
+              });
+              return null;
+            });
   }
 
   private void writeGameResultAsCSV(GameResult result) {

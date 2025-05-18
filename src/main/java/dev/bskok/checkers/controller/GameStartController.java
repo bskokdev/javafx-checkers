@@ -4,10 +4,18 @@ import dev.bskok.checkers.game.GameResult;
 import dev.bskok.checkers.game.GameSettings;
 import dev.bskok.checkers.piece.Player;
 import java.io.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
+
+import dev.bskok.checkers.server.client.GameRestClient;
+import dev.bskok.checkers.server.dto.GameDTO;
+import dev.bskok.checkers.server.dto.GameStatsDTO;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -49,14 +57,75 @@ public class GameStartController {
 
   private FileChooser previousResultsLoader;
 
+  private final GameRestClient restClient = new GameRestClient();
+
   @FXML
   public void initialize() {
     log.debug("Initializing game start screen");
     initializePlayerInputs();
     initializeResultsTableHeaders();
     initializeFileLoaders();
-    initializePreviousScoreIfPresent();
+
+    loadGameHistoryFromServer()
+            .exceptionally(ex -> {
+              log.warn("Failed to load from server, trying local file", ex);
+              initializePreviousScoreIfPresent();
+              return null;
+            });
   }
+
+  private CompletableFuture<Void> loadGameHistoryFromServer() {
+    return restClient.getRecentGames(20)
+            .thenAcceptAsync(games -> {
+              Platform.runLater(() -> {
+                if (!games.isEmpty()) {
+                  loadedFile.setText("Loaded results from server");
+                  populateResultsTableView(convertToGameResults(games));
+                } else {
+                  initializePreviousScoreIfPresent();
+                }
+              });
+            }, Platform::runLater)
+            .exceptionally(ex -> {
+              Platform.runLater(() -> {
+                log.error("Failed to load game history from server", ex);
+                showErrorAlert("Connection Error",
+                        "Could not connect to server. Showing local results.");
+                initializePreviousScoreIfPresent();
+              });
+              return null;
+            });
+  }
+
+  private void showErrorAlert(String title, String message) {
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setTitle(title);
+    alert.setHeaderText(null);
+    alert.setContentText(message);
+    alert.showAndWait();
+  }
+
+  private List<GameResult> convertToGameResults(List<GameDTO> games) {
+    return games.stream()
+            .map(game -> {
+              if (game.getGameStats().size() >= 2) {
+                GameStatsDTO stats1 = game.getGameStats().get(0);
+                GameStatsDTO stats2 = game.getGameStats().get(1);
+
+                return new GameResult(
+                        stats1.getPlayer().getName(),
+                        stats2.getPlayer().getName(),
+                        stats1.getPiecesRemaining(),
+                        stats2.getPiecesRemaining(),
+                        game.getEndTime() != null ? game.getEndTime() : game.getStartTime()
+                );
+              }
+              return null;
+            })
+            .filter(Objects::nonNull)
+            .collect(Collectors.toList());
+  }
+
 
   public void initializeWithExistingStage(Stage stage) {
     this.stage = stage;
@@ -127,9 +196,15 @@ public class GameStartController {
   }
 
   private void initializeResultsTableHeaders() {
-    if (!resultsTableView.getColumns().isEmpty()) {
-      return;
-    }
+    resultsTableView.getColumns().clear();
+
+    TableColumn<GameResult, String> dateCol = new TableColumn<>("Date");
+    dateCol.setCellValueFactory(cellData ->
+            new SimpleStringProperty(
+                    cellData.getValue().gameDate() != null ?
+                            DateTimeFormatter.ofPattern("MMM dd, HH:mm").format(cellData.getValue().gameDate()) :
+                            "N/A"
+            ));
 
     TableColumn<GameResult, String> player1Col = new TableColumn<>("Player 1");
     player1Col.setCellValueFactory(
@@ -139,23 +214,35 @@ public class GameStartController {
     player2Col.setCellValueFactory(
         cellData -> new SimpleStringProperty(cellData.getValue().player2Name()));
 
-    TableColumn<GameResult, Number> player1PiecesCol = new TableColumn<>("Player 1 Pieces");
+    TableColumn<GameResult, Number> player1PiecesCol = new TableColumn<>("P1 Pieces");
     player1PiecesCol.setCellValueFactory(
         cellData -> new SimpleIntegerProperty(cellData.getValue().player1Pieces()));
 
-    TableColumn<GameResult, Number> player2PiecesCol = new TableColumn<>("Player 2 Pieces");
+    TableColumn<GameResult, Number> player2PiecesCol = new TableColumn<>("P2 Pieces");
     player2PiecesCol.setCellValueFactory(
         cellData -> new SimpleIntegerProperty(cellData.getValue().player2Pieces()));
 
-    // Make columns equal width
-    player1Col.prefWidthProperty().bind(resultsTableView.widthProperty().divide(4));
-    player2Col.prefWidthProperty().bind(resultsTableView.widthProperty().divide(4));
-    player1PiecesCol.prefWidthProperty().bind(resultsTableView.widthProperty().divide(4));
-    player2PiecesCol.prefWidthProperty().bind(resultsTableView.widthProperty().divide(4));
+    TableColumn<GameResult, String> winnerCol = new TableColumn<>("Winner");
+    winnerCol.setCellValueFactory(cellData -> {
+        GameResult result = cellData.getValue();
+        return new SimpleStringProperty(
+            result.player1Pieces() > result.player2Pieces() ?
+            result.player1Name() : result.player2Name()
+        );
+    });
 
-    resultsTableView
-        .getColumns()
-        .addAll(player1Col, player2Col, player1PiecesCol, player2PiecesCol);
+    // Make columns equal width
+    double colWidth = 1.0 / 6.0; // 6 columns
+    dateCol.prefWidthProperty().bind(resultsTableView.widthProperty().multiply(colWidth));
+    player1Col.prefWidthProperty().bind(resultsTableView.widthProperty().multiply(colWidth));
+    player2Col.prefWidthProperty().bind(resultsTableView.widthProperty().multiply(colWidth));
+    player1PiecesCol.prefWidthProperty().bind(resultsTableView.widthProperty().multiply(colWidth));
+    player2PiecesCol.prefWidthProperty().bind(resultsTableView.widthProperty().multiply(colWidth));
+    winnerCol.prefWidthProperty().bind(resultsTableView.widthProperty().multiply(colWidth));
+
+    resultsTableView.getColumns().addAll(
+        dateCol, player1Col, player2Col, player1PiecesCol, player2PiecesCol, winnerCol
+    );
   }
 
   private List<GameResult> readDataFromCSV(File file) {

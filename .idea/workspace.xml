@@ -5,8 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="013d2d88-a769-4ab0-9e7c-80752e311b3b" name="Changes" comment="updated game settings fetching">
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/server/client/GameRestClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/server/config/ApiConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/server/dto/CreateGameRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/server/dto/GameCreationResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/server/dto/GameDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/server/dto/GameResultRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/server/dto/GameStatsDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/server/dto/PlayerDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/server/exception/RestClientException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/api.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/controller/GameStartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/controller/GameStartController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/game/GameResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/bskok/checkers/game/GameResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/gameStart.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/gameStart.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,8 +37,8 @@
         <option value="Interface" />
         <option value="FxmlFile" />
         <option value="CSS File" />
-        <option value="Class" />
         <option value="Record" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -46,6 +63,9 @@
         <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
       </MavenGeneralSettings>
     </option>
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="2" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -76,7 +96,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -109,8 +129,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
-        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
       </set>
     </attachedChunks>
   </component>
@@ -172,6 +192,11 @@
       <workItem from="1734903797235" duration="32000" />
       <workItem from="1736090458885" duration="390000" />
       <workItem from="1736160000135" duration="1019000" />
+      <workItem from="1747582262404" duration="1395000" />
+      <workItem from="1747594791443" duration="3082000" />
+      <workItem from="1747601761058" duration="293000" />
+      <workItem from="1747602061469" duration="6765000" />
+      <workItem from="1747608838343" duration="963000" />
     </task>
     <task id="LOCAL-00001" summary="upload to GitHub">
       <option name="closed" value="true" />
